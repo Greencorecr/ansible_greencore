@@ -1,0 +1,53 @@
+---
+- name: Configura servicios a monitorear
+  hosts: inseguro
+  tasks:
+    - name: Instala paquetes requeridos
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - apache2
+        - vim
+        - nano
+        - less
+      become: yes
+    - name: Copia config de apache de htpasswd
+      copy:
+        dest: /etc/apache2/sites-enabled/wireshark.conf
+        content: |
+                <VirtualHost *:80>
+                <Location />
+                    Deny from all
+                    AuthUserFile /var/www/html/.htpasswd
+                    AuthName "Restricted Area"
+                    AuthType Basic
+                    Satisfy Any
+                    require valid-user
+                </Location>
+                </VirtualHost>
+        owner: root
+        group: root
+      become: yes
+    - name: Copia web de ejemplo
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+                greencore
+        owner: root
+        group: root
+      become: yes
+    - name: Crea htpasswd
+      command: htpasswd -bc /var/www/html/.htpasswd greencore greencore
+      become: yes
+    - name: Deshabilita vhost default
+      command: a2dissite 000-default.conf
+      become: yes
+    - name: Habilita servicios
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+      with_items:
+        - apache2
+      become: yes

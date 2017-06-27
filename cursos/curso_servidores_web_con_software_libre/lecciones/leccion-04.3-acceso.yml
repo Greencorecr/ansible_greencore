@@ -1,0 +1,31 @@
+---
+- name: Configura servicios a monitorear
+  hosts: acceso
+  tasks:
+    - name: Instala paquetes requeridos
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - apache2
+        - vim
+        - nano
+        - less
+        - curl
+      become: yes
+    - name: Copia web de ejemplo
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+                greencore
+        owner: root
+        group: root
+      become: yes
+    - name: Habilita servicios
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+      with_items:
+        - apache2
+      become: yes
