@@ -81,7 +81,7 @@
       become: yes
     - name: Descarga CircuitPython para ESP8266 Feather
       get_url:
-        url: https://github.com/adafruit/circuitpython/releases/download/1.0.0-rc.2/adafruit-circuitpython-feather_huzzah-1.0.0-rc.2.bin
+        url: https://github.com/adafruit/circuitpython/releases/download/1.0.0-rc.3/adafruit-circuitpython-feather_huzzah-1.0.0-rc.3.bin
         dest: "{{ ansible_env.HOME }}/"
     - name: Copia instalador de arduino
       unarchive:
