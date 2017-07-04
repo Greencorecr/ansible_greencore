@@ -14,7 +14,13 @@ ansible_03_interpreter=/usr/bin/032
 10.42.25.28 mac01=00:16:3e:c0:48:11 mac02=00:16:3e:c0:48:12 mac03=00:16:3e:c0:48:13 mac04=00:16:3e:c0:48:14 mac05=00:16:3e:c0:48:15 mac06=00:16:3e:c0:48:16 mac07=00:16:3e:c0:48:17 mac08=00:16:3e:c0:48:18 mac09=00:16:3e:c0:48:19
 10.42.25.29 mac01=00:16:3e:c0:49:11 mac02=00:16:3e:c0:49:12 mac03=00:16:3e:c0:49:13 mac04=00:16:3e:c0:49:14 mac05=00:16:3e:c0:49:15 mac06=00:16:3e:c0:49:16 mac07=00:16:3e:c0:49:17 mac08=00:16:3e:c0:49:18 mac09=00:16:3e:c0:49:18
 
-[inseguro]
+[inseguro:children]
+mac02
+
+[proxy:children]
+mac02
+
+[mac01]
 10.42.25.30
 10.42.25.31
 10.42.25.32
@@ -26,7 +32,10 @@ ansible_03_interpreter=/usr/bin/032
 10.42.25.38
 10.42.25.39
 
-[https]
+[https:children]
+mac02
+
+[mac02]
 10.42.25.40
 10.42.25.41
 10.42.25.42
@@ -38,7 +47,13 @@ ansible_03_interpreter=/usr/bin/032
 10.42.25.48
 10.42.25.49
 
-[acceso]
+[acceso:children]
+mac03
+
+[alfresco:children]
+mac03
+
+[mac03]
 10.42.25.50
 10.42.25.51
 10.42.25.52
