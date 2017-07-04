@@ -1,0 +1,36 @@
+---
+- name: Crea contenido para laboratorio de mod_rewrite
+  hosts: https
+  tasks:
+    - name: Copia archivos de contenido
+      file:
+        path: /var/www/html/
+        state: directory
+        mode: 0755
+        owner: root
+        group: root
+      become: yes
+    - name: Copia archivos de contenido
+      copy:
+        content: "Contenido de productos.php3"
+        dest: /var/www/html/productos.php3
+        mode: 0644
+        owner: root
+        group: root
+      become: yes
+    - name: Copia archivos de contenido
+      copy:
+        content: "Contenido de servicios.php3"
+        dest: /var/www/html/servicios.php3
+        mode: 0644
+        owner: root
+        group: root
+      become: yes
+    - name: Copia archivos de contenido
+      copy:
+        content: "Contenido de contacto.php3"
+        dest: /var/www/html/contacto.php3
+        mode: 0644
+        owner: root
+        group: root
+      become: yes
