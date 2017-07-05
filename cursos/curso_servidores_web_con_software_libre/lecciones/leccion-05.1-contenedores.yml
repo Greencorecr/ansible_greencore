@@ -18,7 +18,7 @@
         - alfresco
       become: yes
       ignore_errors: true
-    - name: Crea contenedor inseguro
+    - name: Crea contenedor proxy
       lxc_container:
         name: proxy
         container_log: true
@@ -46,7 +46,7 @@
         state: started
         template_options: -d ubuntu -r xenial -a amd64
       become: yes
-    - name: Crea contenedor acceso
+    - name: Crea contenedor alfresco
       lxc_container:
         name: alfresco
         container_log: true
