@@ -25,7 +25,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ macdnsmasq }}
+          - lxc.network.hwaddr = {{ mac02 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
@@ -39,7 +39,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ maclabapache }}
+          - lxc.network.hwaddr = {{ mac03 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
