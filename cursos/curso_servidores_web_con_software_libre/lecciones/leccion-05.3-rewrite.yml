@@ -28,8 +28,8 @@
       become: yes
     - name: Copia archivos de contenido
       copy:
-        content: "Contenido de contacto.php3"
-        dest: /var/www/html/contacto.php3
+        content: "Contenido de contactos.php3"
+        dest: /var/www/html/contactos.php3
         mode: 0644
         owner: root
         group: root
