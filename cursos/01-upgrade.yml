@@ -1,5 +1,5 @@
 ---
-- name: Actualiza los equipos virtuales como preparación de examen
+- name: Actualiza los equipos fisicos a utilizar en las aulas
   hosts: fisicos
   strategy: free
   tasks:

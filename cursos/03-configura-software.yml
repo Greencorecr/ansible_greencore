@@ -1,6 +1,7 @@
 ---
 - name: Instala la base para los equipos de los laboratorios de Greencore Solutions
   hosts: fisicos
+  strategy: free
   tasks:
   - name: Remueve paqute deja-dup
     apt:
