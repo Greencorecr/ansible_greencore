@@ -1,6 +1,6 @@
 ---
 - name: Apaga los equipos de las aulas de forma manual
-  hosts: all
+  hosts: fisicos
   tasks:
   - name: Ejecuta el comando shutdown
     command: systemctl poweroff

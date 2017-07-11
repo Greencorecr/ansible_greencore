@@ -1,0 +1,8 @@
+---
+- name: Reinicia los equipos fisicos
+  hosts: fisicos
+  tasks:
+  - name: Ejecuta el comando reboot
+    command: systemctl reboot
+    become: yes
+    ignore_errors: true
