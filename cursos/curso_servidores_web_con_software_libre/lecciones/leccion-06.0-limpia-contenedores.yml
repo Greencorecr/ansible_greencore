@@ -1,0 +1,24 @@
+---
+- name: Crea contenedores necesarios para el curso
+  hosts: fisicos
+  tasks:
+    - name: Apaga todos los contenedores
+      command: "lxc-stop -n {{ item }}"
+      with_items:
+        - web-base
+        - nagiosxi
+        - lab01
+        - lab02
+        - lab03
+      become: yes
+      ignore_errors: true
+    - name: Destruye todos los contenedores
+      command: "lxc-destroy -n {{ item }}"
+      with_items:
+        - web-base
+        - nagiosxi
+        - lab01
+        - lab02
+        - lab03
+      become: yes
+      ignore_errors: true

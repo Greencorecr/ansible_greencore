@@ -1,0 +1,35 @@
+---
+- name: Instala laboratorio de depuración 01
+  hosts: lab01
+  tasks:
+    - name: Instala paquetes requeridos para esta receta
+      apt: 
+        name: "{{ item }}"
+        state: installed
+      with_items:
+        - apache2
+        - vim
+        - nano
+      become: yes
+    - name: Copia archivo de virtualhost para laboratorio de depuracion 01
+      copy:
+        src: ../files/lab01.conf
+        dest: /etc/apache2/sites-available/lab01.conf
+        mode: 0644
+        owner: root
+        group: root
+      become: yes
+    - name: Deshabilita virtualhost default
+      command: a2dissite 000-default
+      become: yes
+    - name: Habilita virtualhost lab01
+      command: a2ensite lab01
+      become: yes
+    - name: Habilita servicios
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+      with_items:
+        - apache2.service
+      become: yes
