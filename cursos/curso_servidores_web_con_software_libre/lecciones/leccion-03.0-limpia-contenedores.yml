@@ -1,0 +1,22 @@
+---
+- name: Crea contenedor para laboratorios clase03
+  hosts: fisicos
+  tasks:
+    - name: Apaga todos los contenedores
+      command: "lxc-stop -n {{ item }}"
+      with_items:
+        - php
+        - hhvm
+        - python
+        - perl
+      become: yes
+      ignore_errors: true
+    - name: Destruye todos los contenedores
+      command: "lxc-destroy -n {{ item }}"
+      with_items:
+        - php
+        - hhvm
+        - python
+        - perl
+      become: yes
+      ignore_errors: true

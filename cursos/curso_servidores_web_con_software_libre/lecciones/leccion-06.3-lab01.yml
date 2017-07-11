@@ -33,3 +33,4 @@
       with_items:
         - apache2.service
       become: yes
+      ignore_errors: true

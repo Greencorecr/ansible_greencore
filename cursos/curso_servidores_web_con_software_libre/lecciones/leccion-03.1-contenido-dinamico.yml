@@ -29,7 +29,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ macphp }}
+          - lxc.network.hwaddr = {{ mac01 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
@@ -43,7 +43,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ machhvm }}
+          - lxc.network.hwaddr = {{ mac02 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
@@ -57,7 +57,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ macpython }}
+          - lxc.network.hwaddr = {{ mac03 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
@@ -71,7 +71,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ macperl }}
+          - lxc.network.hwaddr = {{ mac04 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
