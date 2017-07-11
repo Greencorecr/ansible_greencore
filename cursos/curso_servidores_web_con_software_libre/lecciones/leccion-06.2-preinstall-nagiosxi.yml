@@ -1,0 +1,26 @@
+---
+- name: Preinstala Nagiox XI
+  hosts: nagiosxi
+  tasks:
+    - name: Copia instalador de nagiosxi
+      unarchive:
+        dest: /home/greencore/ 
+        src: https://assets.nagios.com/downloads/nagiosxi/5/xi-5.4.6.tar.gz
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        remote_src: yes
+      become: yes
+    - name: Mueve sysctl para arreglar problema de nagiosxi en contenedores
+      command: mv /sbin/sysctl /root
+      become: yes
+    - name: Agrega liga a sysctl
+      file:
+        state: link
+        src: /bin/true
+        dest: /sbin/sysctl
+      become: yes
+    - name: Ejecuta instalador de nagiosxi
+      command: ./fullinstall -n
+      args:
+        chdir: /home/greencore/nagiosxi/
+      become: yes

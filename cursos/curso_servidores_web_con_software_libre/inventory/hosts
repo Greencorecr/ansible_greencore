@@ -20,6 +20,9 @@ mac02
 [proxy:children]
 mac02
 
+[nagiosxi:children]
+mac02
+
 [mac01]
 10.42.25.30
 10.42.25.31
