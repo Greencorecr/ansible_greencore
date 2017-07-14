@@ -9,6 +9,7 @@
         - hhvm
         - python
         - perl
+        - cgi
       become: yes
       ignore_errors: true
     - name: Destruye todos los contenedores
@@ -18,5 +19,6 @@
         - hhvm
         - python
         - perl
+        - cgi
       become: yes
       ignore_errors: true
