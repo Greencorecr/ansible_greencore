@@ -1,6 +1,6 @@
 ---
 - name: Crea contenido para laboratorio de mod_rewrite
-  hosts: https
+  hosts: proxy
   tasks:
     - name: Copia archivos de contenido
       file:

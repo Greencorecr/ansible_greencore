@@ -18,7 +18,7 @@ ansible_03_interpreter=/usr/bin/032
 mac02
 
 [proxy:children]
-mac02
+mac01
 
 [nagiosxi:children]
 mac02
