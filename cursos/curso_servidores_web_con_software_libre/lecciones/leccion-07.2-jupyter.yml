@@ -1,5 +1,5 @@
 ---
-- name: Crea contenedores necesarios para taller WAF
+- name: Instala Jupyter Notebook en los contenedores
   hosts: all
   strategy: free
   tasks:
