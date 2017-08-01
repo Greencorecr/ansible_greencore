@@ -1,6 +1,6 @@
 [all:vars]
 ansible_user=greencore
-ansible_03_interpreter=/usr/bin/032
+ansible_python_interpreter=/usr/bin/python2
 
 [fisicos]
 10.42.25.20 mac01=00:16:3e:c0:40:11 mac02=00:16:3e:c0:40:12 mac03=00:16:3e:c0:40:13 mac04=00:16:3e:c0:40:14 mac05=00:16:3e:c0:40:15 mac06=00:16:3e:c0:40:16 mac07=00:16:3e:c0:40:17 mac08=00:16:3e:c0:40:18 mac09=00:16:3e:c0:40:19
