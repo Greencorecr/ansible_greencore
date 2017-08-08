@@ -7,6 +7,7 @@
       with_items:
         - nginx
         - drupal
+        - moodle
       become: yes
       ignore_errors: true
     - name: Destruye todos los contenedores
@@ -14,5 +15,6 @@
       with_items:
         - nginx
         - drupal
+        - moodle
       become: yes
       ignore_errors: true

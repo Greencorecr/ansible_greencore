@@ -9,9 +9,23 @@
         container_config:
           - lxc.network.link = br0
           - lxc.start.auto = 1
-          - lxc.start.delay = 120
+          - lxc.start.delay = 10
           - lxc.start.order = 0
           - lxc.network.hwaddr = {{ mac01 }}
+        template: download
+        state: started
+        template_options: -d ubuntu -r xenial -a amd64
+      become: yes
+    - name: Crea contenedor moodle
+      lxc_container:
+        name: moodle
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 10
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac02 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
@@ -23,9 +37,9 @@
         container_config:
           - lxc.network.link = br0
           - lxc.start.auto = 1
-          - lxc.start.delay = 120
+          - lxc.start.delay = 10
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ mac02 }}
+          - lxc.network.hwaddr = {{ mac03 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
