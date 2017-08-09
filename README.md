@@ -1,4 +1,4 @@
-# ansible_greencore [![Build Status](https://travis-ci.org/fede2cr/ansible_greencore.svg?branch=master)](https://travis-ci.org/fede2cr/ansible_greencore)
+# ansible_greencore [![Build Status](https://travis-ci.org/Greencorecr/ansible_greencore.svg?branch=master)](https://travis-ci.org/Greencorecr/ansible_greencore)
 
 Recetas de ansible para cosas que hacemos en Greencore Solutions
 
