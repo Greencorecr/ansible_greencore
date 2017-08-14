@@ -27,7 +27,7 @@
         container_config:
           - lxc.network.link = br0
           - lxc.start.auto = 1
-          - lxc.start.delay = 120
+          - lxc.start.delay = 10
           - lxc.start.order = 0
           - lxc.network.hwaddr = {{ mac01 }}
         template: download
@@ -41,7 +41,7 @@
         container_config:
           - lxc.network.link = br0
           - lxc.start.auto = 1
-          - lxc.start.delay = 120
+          - lxc.start.delay = 10
           - lxc.start.order = 0
           - lxc.network.hwaddr = {{ mac02 }}
         template: download
@@ -55,7 +55,7 @@
         container_config:
           - lxc.network.link = br0
           - lxc.start.auto = 1
-          - lxc.start.delay = 120
+          - lxc.start.delay = 10
           - lxc.start.order = 0
           - lxc.network.hwaddr = {{ mac03 }}
         template: download
@@ -69,7 +69,7 @@
         container_config:
           - lxc.network.link = br0
           - lxc.start.auto = 1
-          - lxc.start.delay = 120
+          - lxc.start.delay = 10
           - lxc.start.order = 0
           - lxc.network.hwaddr = {{ mac04 }}
         template: download
