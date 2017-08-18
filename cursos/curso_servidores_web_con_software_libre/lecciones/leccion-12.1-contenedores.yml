@@ -1,0 +1,58 @@
+---
+- name: Crea contenedores necesarios para el curso
+  hosts: fisicos
+  tasks:
+    - name: Crea contenedor servidor01
+      lxc_container:
+        name: servidor01
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 10
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac03 }}
+          - lxc.cgroup.memory.limit_in_bytes = 512M
+        template: download
+        state: started
+        template_options: -d ubuntu -r xenial -a amd64
+      become: yes
+    - name: Crea contenedor servidor02
+      lxc_container:
+        name: servidor02
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 10
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac04 }}
+          - lxc.cgroup.memory.limit_in_bytes = 512M
+        template: download
+        state: started
+        template_options: -d ubuntu -r xenial -a amd64
+      become: yes
+    - name: Crea contenedor servidor03
+      lxc_container:
+        name: servidor03
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 10
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac05 }}
+          - lxc.cgroup.memory.limit_in_bytes = 512M
+        template: download
+        state: started
+        template_options: -d ubuntu -r xenial -a amd64
+      become: yes
+    - name: Pausa para esperar que levante contenedor
+      pause:
+        seconds: 10
+    - name: Crea configuración base para contenedores en Ubuntu
+      command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
+      with_nested:
+        - [ 'servidor01', 'servidor02', 'servidor03' ]
+        - [ "sed -i 's/archive.ubuntu.com/ubuntu-mirror.greencore.int/g' /etc/apt/sources.list ", 'apt-get update', 'apt-get dist-upgrade -y', 'apt-get install python ssh sudo psmisc curl -y', 'systemctl enable ssh', 'systemctl start ssh', 'useradd -s /bin/bash -G sudo -m -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore' , 'mkdir ~greencore/.ssh/', 'wget -O ~greencore/.ssh/authorized_keys https://raw.githubusercontent.com/fede2cr/ansible_greencore/master/files/authorized_keys', 'chown -R greencore:greencore ~greencore/.ssh' ]
+      become: yes

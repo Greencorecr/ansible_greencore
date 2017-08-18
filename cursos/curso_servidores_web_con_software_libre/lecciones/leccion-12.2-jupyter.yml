@@ -1,0 +1,54 @@
+---
+- name: Instala Jupyter Notebook en los contenedores
+  hosts: fisicos
+  strategy: free
+  tasks:
+    - name: Instala paquetes requeridos
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+      become: yes
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - name: Instala paquetes requeridos
+      pacman:
+        name: python-pip
+        state: present
+        update_cache: yes
+      become: yes
+      when: ansible_distribution == 'Archlinux'
+    - name: Actualiza herramienta pip3
+      command: pip3 install --upgrade pip
+      become: yes
+    - name: Instala modulo de Python de Jupyter, y bash_kernel
+      pip:
+        name: "{{ item }}"
+        executable: pip3
+        state: latest
+      with_items:
+        - jupyter
+        - bash_kernel
+      become: yes
+    - name: Ejecuta python3 -m bash_kernel.install
+      command: python3 -m bash_kernel.install
+      become: yes
+    - command: "jupyter notebook --generate-config"
+      become: no
+      ignore_errors: true
+    - name: Agrega clave "greencore" para autenticacion
+      lineinfile:
+        regexp: "^#c.NotebookApp.password"
+        dest: "{{ ansible_env.HOME }}/.jupyter/jupyter_notebook_config.py"
+        line: "c.NotebookApp.password = 'sha512:8c79bf18770a:e874ca1ba53f2538c308830430211c3604fb4da03feefc64280584b690ff41448445490e38a697ba29049f69d003a5c2bf70bfed547e9fb6858f06ba202774bc' "
+        state: present
+      become: no
+    - name: Agrega regla de sudo para jupyter
+      copy:
+        dest: /etc/sudoers.d/jupyter
+        content: |
+                %sudo ALL=(ALL) NOPASSWD: ALL
+                Defaults:greencore !requiretty
+        owner: root
+        group: root
+        mode: 0755
+      become: yes
