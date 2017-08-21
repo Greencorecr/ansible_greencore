@@ -11,6 +11,7 @@
     with_items:
       - modemmanager
       - deja-dup
+      - aptdaemon
   - name: Instala paquetes requeridos por los instructores
     apt:
       name: "{{ item }}"
