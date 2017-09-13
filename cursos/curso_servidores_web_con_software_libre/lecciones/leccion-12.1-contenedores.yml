@@ -11,7 +11,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 10
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ mac03 }}
+          - lxc.network.hwaddr = {{ mac01 }}
           - lxc.cgroup.memory.limit_in_bytes = 512M
         template: download
         state: started
@@ -26,7 +26,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 10
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ mac04 }}
+          - lxc.network.hwaddr = {{ mac02 }}
           - lxc.cgroup.memory.limit_in_bytes = 512M
         template: download
         state: started
@@ -41,7 +41,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 10
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ mac05 }}
+          - lxc.network.hwaddr = {{ mac03 }}
           - lxc.cgroup.memory.limit_in_bytes = 512M
         template: download
         state: started
