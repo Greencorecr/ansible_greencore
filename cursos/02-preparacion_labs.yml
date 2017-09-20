@@ -3,6 +3,20 @@
   hosts: fisicos
   strategy: free
   tasks:
+  - name: Instala paquetes requeridos para esta receta
+    apt: 
+      name: "{{ item }}"
+      state: installed
+    with_items:
+      - libpython-dev
+      - gcc
+      - lxc
+      - lxc-dev
+      - python-pip
+      - libvirt-bin
+      - chromium-browser
+      - libguestfs-tools
+    become: yes
   - name: Deshabilita biosdevname
     lineinfile:
       regexp: '^GRUB_CMDLINE_LINUX=""'
@@ -25,30 +39,6 @@
       owner: root
       group: root
     become: yes
-  - name: Configura Chromium Browser en modo Incognito
-    lineinfile:
-      regexp: '^CHROMIUM_FLAGS=""'
-      dest: "/etc/chromium-browser/default"
-      line: 'CHROMIUM_FLAGS="-incognito"'
-      state: present
-      backrefs: yes
-    become: yes
-  - name: Instala tarea programada para apagado automático de equipos
-    copy:
-      dest: /etc/cron.d/shutdown
-      src: files/cron-shutdown
-      mode: 0644
-      owner: root
-      group: root
-    become: yes
-  - name: Instala script turn-on.sh como interface de wakeonlan
-    copy:
-      dest: /usr/local/bin/turn-on.sh
-      src: files/turn-on.sh
-      mode: 0755
-      owner: root
-      group: root
-    become: yes
   - name: Fog DHCP Hostname en dhclient hooks
     copy:
       dest: /etc/dhcp/dhclient-enter-hooks.d/unset_old_hostname
@@ -57,13 +47,6 @@
       owner: root
       group: root
     become: yes
-  - name: Crea usuario greencore con grupos necesarios
-    user:
-      name: greencore
-      shell: /bin/bash
-      groups: sudo,dialout,libvirt,adm
-      append: yes
-    become: yes
   - name: Configura kernel para que funcione como router
     sysctl:
       name: net.ipv4.ip_forward
@@ -71,18 +54,6 @@
       sysctl_set: yes
       state: present
       reload: yes
-    become: yes
-  - name: Instala paquetes requeridos para esta receta
-    apt: 
-      name: "{{ item }}"
-      state: installed
-    with_items:
-      - lxc
-      - lxc-dev
-      - python-pip
-      - libvirt-bin
-      - chromium-browser
-      - libguestfs-tools
     become: yes
   - name: Instala dependencias de python para módulo de ansible de LXC
     pip: name=lxc-python2 state=present
