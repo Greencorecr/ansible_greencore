@@ -17,5 +17,5 @@
       get_url:
         url: http://10.42.30.5/vms/kali.qcow2
         dest: /var/lib/libvirt/images/kali.qcow2
-        mode: 775
+        mode: 0775
         owner: "{{ ansible_user }}"
