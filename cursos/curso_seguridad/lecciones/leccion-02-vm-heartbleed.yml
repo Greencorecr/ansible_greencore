@@ -13,8 +13,9 @@
     - name: Importa archivo XML para VM de Kali
       command: virsh define /tmp/heartbleed.xml
       become: yes
-    - name: Mueve imagen de kali a directorio de imagenes
-      synchronize:
-        mode: pull
-        src: rsync://10.42.30.5::vms/heartbleed.qcow2
-        dest: /var/lib/libvirt/images/
+    - name: Mueve imagen de heartbleed a directorio de imagenes
+      get_url:
+        url: http://10.42.30.5/vms/heartbleed.qcow2
+        dest: /var/lib/libvirt/images/heartbleed.qcow2
+        mode: 0775
+        owner: "{{ ansible_user }}"
