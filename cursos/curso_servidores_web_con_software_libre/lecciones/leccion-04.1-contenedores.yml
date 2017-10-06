@@ -78,7 +78,7 @@
       become: yes
     - name: Pausa para esperar que levante contenedor
       pause:
-        seconds: 30
+        seconds: 10
     - name: Crea configuración base para todos los contenedores
       command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
       with_nested:
