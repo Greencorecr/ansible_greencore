@@ -43,10 +43,14 @@
       - avahi-discover
       - udpcast
       - pv
+      - docker-compose
     become: yes
-  - name: Instala asciinema con pip
+  - name: Instala módulos de python con pip3
     pip:
-      name: asciinema
+      name: "{{ item }}"
       state: latest
       executable: pip3
+    with_items:
+      - asciinema
+      - ansible
     become: yes
