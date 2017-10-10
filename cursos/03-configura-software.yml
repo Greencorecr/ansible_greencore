@@ -12,6 +12,32 @@
       - modemmanager
       - deja-dup
       - aptdaemon
+  - name: Instala módulos de python con pip3
+    pip:
+      name: "{{ item }}"
+      state: latest
+      executable: pip3
+    with_items:
+      - asciinema
+      - ansible
+    become: yes
+  - name: Agregamos llave de GPG para Visual Code
+    apt_key:
+      url: https://packages.microsoft.com/keys/microsoft.asc
+      state: present
+      keyring: /etc/apt/trusted.gpg.d/microsoft.gpg
+    become: yes
+  - name: Crea archivo de fuentes para paquetes de Visual Code
+    copy:
+      dest: /etc/apt/sources.list.d/vscode.list
+      content: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+      owner: root
+      group: root
+    become: yes
+  - name: Actualiza cache
+    apt:
+      update_cache: yes
+    become: yes
   - name: Instala paquetes requeridos por los instructores
     apt:
       name: "{{ item }}"
@@ -44,13 +70,5 @@
       - udpcast
       - pv
       - docker-compose
-    become: yes
-  - name: Instala módulos de python con pip3
-    pip:
-      name: "{{ item }}"
-      state: latest
-      executable: pip3
-    with_items:
-      - asciinema
-      - ansible
+      - code
     become: yes
