@@ -38,6 +38,13 @@
     apt:
       update_cache: yes
     become: yes
+  - name: Usa debconf para decirle a wireshark que permita escucha a usuarios no-root
+    debconf:
+      name: wireshark-common
+      question: wireshark-common/install-setuid
+      value: true
+      vtype: boolean
+    become: yes
   - name: Instala paquetes requeridos por los instructores
     apt:
       name: "{{ item }}"
@@ -71,4 +78,14 @@
       - pv
       - docker-compose
       - code
+      - nmap
+      - wireshark
+      - etherape
+      - iftop
+    become: yes
+  - name: Agrega a usuario ansible_user en grupos necesarios
+    user:
+      name: "{{ ansible_user }}"
+      groups: wireshark,sudo,docker,dialout,libvirt
+      append: yes
     become: yes
