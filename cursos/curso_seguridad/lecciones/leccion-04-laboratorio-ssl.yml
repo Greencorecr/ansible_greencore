@@ -4,5 +4,8 @@
   tasks:
     - name: Copia instalador de Firefox nightly
       unarchive:
-        src:  files/firefox-55.0a1.en-US.linux-x86_64.tar.bz2
+        src: http://10.42.30.5/vms/firefox-58.0a1.en-US.linux-x86_64.tar.bz2
+        mode: 0775
+        owner: "{{ ansible_user }}"
         dest: "{{ ansible_env.HOME }}/"
+        remote_src: yes
