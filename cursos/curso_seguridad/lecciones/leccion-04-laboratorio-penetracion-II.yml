@@ -20,5 +20,17 @@
         - postfix.service
       become: yes
     - name: Cambia clave de root
-      command: usermod -p '$6$d7hx18ts$/Gt9pbMeUa3lbVUoZu4qcjsHrrIspQge5/yvC8p91jhbgYbx1puQMRH80gzpabGCe7heqkiPRD/nzTwW9J20o0' root
+      command: usermod -p '$6$BPKar9D5$icMnv/Q02nk3N9l25JqSIE76eXWWo6uJI.yAhgMwIHSLzcRyliy5rvboSG1sDtfmcSksfNu6H1YLixfeUt2AQ.' root
+      become: yes
+    - name: Habilita SSH para root
+      replace: >
+        regexp="PermitRootLogin prohibit-password"
+        replace="PermitRootLogin yes"
+        dest=/etc/ssh/sshd_config
+      become: yes
+    - name: Reinicia SSH
+      service:
+        name: ssh
+        state: restarted
+        enabled: yes
       become: yes
