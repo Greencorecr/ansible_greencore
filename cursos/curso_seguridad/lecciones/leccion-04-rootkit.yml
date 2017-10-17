@@ -4,7 +4,7 @@
   tasks:
     - name: Plantilla de jinja para XML de VM de Kali
       template:
-        src: files/rootkit.xml.j2
+        src: ../files/rootkit.xml.j2
         dest: /tmp/rootkit.xml
         mode: 0644
         owner: root
@@ -14,6 +14,8 @@
       command: virsh define /tmp/rootkit.xml
       become: yes
     - name: Mueve imagen de kali a directorio de imagenes
-      synchronize:
-        src: /tmp/rootkit.qcow2
-        dest: /var/lib/libvirt/images/
+      get_url:
+        url: http://10.42.30.5/vms/rootkit.qcow2
+        mode: 0775
+        owner: "{{ ansible_user }}"
+        dest: /var/lib/libvirt/images/rootkit.qcow2
