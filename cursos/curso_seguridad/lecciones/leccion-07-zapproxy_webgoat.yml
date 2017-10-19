@@ -25,7 +25,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ macwebgoat }}
+          - lxc.network.hwaddr = {{ mac02 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
@@ -39,14 +39,14 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ maczap }}
+          - lxc.network.hwaddr = {{ mac03 }}
         template: download
         state: started
         template_options: -d ubuntu -r xenial -a amd64
       become: yes
     - name: Pausa para esperar que levante contenedor
       pause:
-        seconds: 30
+        seconds: 10
     - name: Crea configuración base para todos los contenedores
       command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
       with_nested:
