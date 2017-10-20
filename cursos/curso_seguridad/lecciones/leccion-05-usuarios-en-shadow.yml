@@ -4,10 +4,16 @@
   tasks:
     - name: Crea usuarios para laboratorios, con claves sacas de crunch
       user:
-        name: "{{ item[0] }}"
-        password: "{{ item[1] }}"
-      with_nested:
-        - [ 'hugo', 'paco', 'luis' ]
-        - [ '$6$bqUYLYOh$4FN9yuzWTNXQmwvG3geKH6M2z7/p..W0tM6m7pxviS5vXUrUr3DGv98EFXftbGcHXJnLxbGcrA3peVmO/u4xn.', '$6$lwj07tAU$vtO3.NuV80iQjDfVu0skHP3LV0Myq3J7PlDxHvSiqx0Cc1S998IniZqjX7NUEvj2225uW49MLn9dwlSnGb/.o/', '$6$FPIi3wQC$eBcSAHiFAv5CTRtxihMGqPEd0A1xZFm1UweMVaNKRGgKar5u2QaR7OctxXUpud8w03BfXcZkZmBCT0lPfcwy80' ]
+        name: hugo
+        password: '$6$bqUYLYOh$4FN9yuzWTNXQmwvG3geKH6M2z7/p..W0tM6m7pxviS5vXUrUr3DGv98EFXftbGcHXJnLxbGcrA3peVmO/u4xn.'
       become: yes
-
+    - name: Crea usuarios para laboratorios, con claves sacas de crunch
+      user:
+        name: paco
+        password: '$6$lwj07tAU$vtO3.NuV80iQjDfVu0skHP3LV0Myq3J7PlDxHvSiqx0Cc1S998IniZqjX7NUEvj2225uW49MLn9dwlSnGb/.o/'
+      become: yes
+    - name: Crea usuarios para laboratorios, con claves sacas de crunch
+      user:
+        name: luis
+        password: '$6$LCRI78HV$PVujoOO/cBayfFsGg2mg60A4bVuvMWwL.3bL6dACs8lzFRvDZ5U72zWHaHAB2eMcBf62qZBwKchCl9G0pvWL/1'
+      become: yes
