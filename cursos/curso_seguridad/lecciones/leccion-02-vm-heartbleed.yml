@@ -15,7 +15,9 @@
       become: yes
     - name: Mueve imagen de heartbleed a directorio de imagenes
       get_url:
-        url: http://10.42.30.5/vms/heartbleed.qcow2
-        dest: /var/lib/libvirt/images/heartbleed.qcow2
+        url: http://10.42.30.5/vms/heartbleed.qcow2.bz2
+        dest: /var/lib/libvirt/images/heartbleed.qcow2.bz2
         mode: 0775
         owner: "{{ ansible_user }}"
+    - name: Descomprime imagen de ubuntu1204 usando deteccion de threads
+      command: pbzip2 -d /var/lib/libvirt/images/heartbleed.qcow2.bz2
