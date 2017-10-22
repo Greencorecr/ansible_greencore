@@ -12,6 +12,7 @@
       - modemmanager
       - deja-dup
       - aptdaemon
+      - update-manager-core
   - name: Instala módulos de python con pip3
     pip:
       name: "{{ item }}"
@@ -82,6 +83,7 @@
       - wireshark
       - etherape
       - iftop
+      - pbzip2
     become: yes
   - name: Agrega a usuario ansible_user en grupos necesarios
     user:
