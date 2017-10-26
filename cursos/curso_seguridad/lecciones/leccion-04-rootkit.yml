@@ -19,6 +19,5 @@
         mode: 0775
         owner: "{{ ansible_user }}"
         dest: /var/lib/libvirt/images/rootkit.qcow2.bz2
-   - name: Descomprime imagen de rootkit usando deteccion de threads
+    - name: Descomprime imagen de rootkit usando deteccion de threads
       command: pbzip2 -d /var/lib/libvirt/images/rootkit.qcow2.bz2
-
