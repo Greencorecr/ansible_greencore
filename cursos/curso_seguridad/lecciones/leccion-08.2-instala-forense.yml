@@ -1,0 +1,12 @@
+---
+- name: Crea contenedores necesarios para taller WAF
+  hosts: forense
+  strategy: free
+  tasks:
+    - name: Instala paquetes requeridos
+      apt:
+        name: firefox
+        state: present
+        update_cache: yes
+      become: yes
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
