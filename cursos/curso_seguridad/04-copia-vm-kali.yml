@@ -10,7 +10,7 @@
         owner: root
         group: root
       become: yes
-    - name: Importa archivo XML para VM de Rootkit
+    - name: Importa archivo XML para VM de Kali
       command: virsh define /tmp/kali.xml
       become: yes
     - name: Mueve imagen de kali a directorio de imagenes
