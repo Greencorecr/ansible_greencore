@@ -1,0 +1,10 @@
+---
+- name: Copia imagen de kali-gcs para Raspberry Pi
+  hosts: fisicos
+  tasks:
+    - name: Descarga imagen de kali-gcs para Raspberry a home
+      get_url:
+        url: http://10.42.30.5/vms/kali-gcs/kali-gcs-0.4.img.bz2
+        dest: "{{ ansible_env.HOME }}/kali-gcs-0.4.img.bz2"
+        mode: 0775
+        owner: "{{ ansible_user }}"
