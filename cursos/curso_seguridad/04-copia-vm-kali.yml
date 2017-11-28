@@ -1,6 +1,7 @@
 ---
 - name: Instala la máquina virtual de Kali
   hosts: fisicos
+  strategy: free
   tasks:
     - name: Plantilla de jinja para XML de VM de Kali
       template:
