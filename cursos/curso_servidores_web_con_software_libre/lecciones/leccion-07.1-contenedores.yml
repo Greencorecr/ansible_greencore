@@ -79,5 +79,5 @@
       command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
       with_nested:
         - [ 'drupal', 'joomla', 'wordpress', 'moodle', 'osticket' ]
-        - [ "sed -i 's/archive.ubuntu.com/ubuntu-mirror.greencore.int/g' /etc/apt/sources.list ", 'apt-get update', 'apt-get dist-upgrade -y', 'apt-get install python ssh sudo psmisc curl -y', 'systemctl enable ssh', 'systemctl start ssh', 'useradd -s /bin/bash -G sudo -m -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore' , 'mkdir ~greencore/.ssh/', 'wget -O ~greencore/.ssh/authorized_keys https://raw.githubusercontent.com/fede2cr/ansible_greencore/master/files/authorized_keys', 'chown -R greencore:greencore ~greencore/.ssh' ]
+        - [ "sed -i 's/archive.ubuntu.com/ubuntu-mirror.greencore.int/g' /etc/apt/sources.list ", 'apt-get update', 'apt-get dist-upgrade -y', 'apt-get install python ssh sudo psmisc curl nano -y', 'systemctl enable ssh', 'systemctl start ssh', 'useradd -s /bin/bash -G sudo -m -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore' , 'mkdir ~greencore/.ssh/', 'wget -O ~greencore/.ssh/authorized_keys https://raw.githubusercontent.com/fede2cr/ansible_greencore/master/files/authorized_keys', 'chown -R greencore:greencore ~greencore/.ssh' ]
       become: yes
