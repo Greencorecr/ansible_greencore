@@ -63,7 +63,7 @@
     - name: Crea liga de arduino
       file:
         state: link
-        src: /usr/local/arduino-1.8.3/arduino
+        src: /usr/local/arduino-1.8.5/arduino
         dest: /usr/bin/arduino
         force: yes
       become: yes
@@ -81,7 +81,7 @@
       become: yes
     - name: Descarga CircuitPython para ESP8266 Feather
       get_url:
-        url: https://github.com/adafruit/circuitpython/releases/download/2.2.0/adafruit-circuitpython-feather_huzzah-2.2.0.bin
+        url: https://github.com/adafruit/circuitpython/releases/download/2.2.0/adafruit-circuitpython-feather_huzzah-2.2.3.bin
         dest: "{{ ansible_env.HOME }}/"
     - name: Copia instalador de arduino
       unarchive:
@@ -114,5 +114,5 @@
     - name: Descarga Icestudio
       git:
         repo: https://github.com/FPGAwars/icestudio.git
-        dest: "{{ ansible_env.HOME }}"/icestudio
+        dest: "{{ ansible_env.HOME }}/icestudio"
  
