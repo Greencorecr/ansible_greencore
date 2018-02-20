@@ -25,5 +25,7 @@
         dest: /var/lib/libvirt/images/kali.qcow2.bz2
         mode: 0775
         owner: "{{ ansible_user }}"
+      become: yes
     - name: Descomprime imagen de kali usando deteccion de threads
       command: pbzip2 -d /var/lib/libvirt/images/kali.qcow2.bz2
+      become: yes
