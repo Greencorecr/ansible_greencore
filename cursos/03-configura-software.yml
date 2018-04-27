@@ -86,6 +86,8 @@
       - iftop
       - pbzip2
       - distcc
+      - distcc-pump
+      - distccmon-gnome  
       - ccache
     become: yes
   - name: Agrega a usuario ansible_user en grupos necesarios
