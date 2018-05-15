@@ -1,0 +1,22 @@
+---
+- name: Crea contenedores necesarios
+  hosts: fisicos
+  tasks:
+    - name: Apaga todos los contenedores
+      command: "lxc-stop -n {{ item }}"
+      with_items:
+        - nagios
+        - snmpd
+        - sensores
+        - servidor
+      become: yes
+      ignore_errors: true
+    - name: Destruye todos los contenedores
+      command: "lxc-destroy -n {{ item }}"
+      with_items:
+        - nagios
+        - snmpd
+        - sensores
+        - servidor
+      become: yes
+      ignore_errors: true
