@@ -1,0 +1,33 @@
+---
+- name: Crea contenedores necesarios para el curso
+  hosts: alfresco
+  tasks:
+    - name: Instala dependencias
+      apt:
+        name: "{{ item }}"
+        state: installed
+      with_items:
+        - libfontconfig1-dev
+        - libice-dev
+        - libsm-dev
+        - libxrender-dev
+        - libxext-dev
+        - libxinerama-dev
+        - libcups2-dev
+        - libglu-dev
+        - libcairo2
+        - libgl1-mesa-glx 
+        - rsync
+      become: yes
+    - name: Copia configuracion para alfresco
+      copy:
+        src: ../files/option-file.txt
+        dest: "{{ ansible_env.HOME }}"
+        mode: 0644
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+    - name: Copia alfresco
+      get_url:
+        dest: "{{ ansible_env.HOME }}"
+        url: http://10.42.30.5/alfresco-community-installer-201707-linux-x64.bin
+        mode: 0755

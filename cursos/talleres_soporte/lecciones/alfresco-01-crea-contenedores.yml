@@ -1,0 +1,27 @@
+---
+- name: Crea contenedores necesarios para el curso
+  hosts: fisicos
+  tasks:
+    - name: Crea contenedor alfresco
+      lxc_container:
+        name: alfresco
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 10
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac01 }}
+        template: download
+        state: started
+        template_options: -d ubuntu -r xenial -a amd64
+      become: yes
+    - name: Pausa para esperar que levante contenedor
+      pause:
+        seconds: 10
+    - name: Crea configuración base para todos los contenedores
+      command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
+      with_nested:
+        - [ 'proxy', 'https', 'alfresco' ]
+        - [ "sed -i 's/archive.ubuntu.com/ubuntu-mirror.greencore.int/g' /etc/apt/sources.list ", 'apt-get update', 'apt-get dist-upgrade -y', 'apt-get install python ssh sudo psmisc curl nano -y', 'systemctl enable ssh', 'systemctl start ssh', 'useradd -s /bin/bash -G sudo -m -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore' , 'mkdir ~greencore/.ssh/', 'wget -O ~greencore/.ssh/authorized_keys https://raw.githubusercontent.com/fede2cr/ansible_greencore/master/files/authorized_keys', 'chown -R greencore:greencore ~greencore/.ssh' ]
+      become: yes
