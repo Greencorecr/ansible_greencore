@@ -21,7 +21,7 @@
       become: yes
     - name: Mueve imagen de CentOS a directorio de imagenes
       get_url:
-        url: http://10.42.25.20/CentOS.qcow2.bz2
+        url: http://10.42.30.5/vms/CentOS.qcow2.bz2
         dest: /var/lib/libvirt/images/CentOS.qcow2.bz2
         mode: 0775
         owner: "{{ ansible_user }}"
