@@ -1,0 +1,67 @@
+---
+- name: Crea contenedores necesarios para taller de Zap y Webgoat
+  hosts: fisicos
+  tasks:
+    - name: Apaga todos los contenedores
+      command: "lxc-stop -n {{ item }}"
+      with_items:
+        - webgoat
+        - zap
+      become: yes
+      ignore_errors: true
+    - name: Destruye todos los contenedores
+      command: "lxc-destroy -n {{ item }}"
+      with_items:
+        - webgoat
+        - zap
+      become: yes
+      ignore_errors: true
+    - name: Crea contenedor webgoat
+      lxc_container:
+        name: webgoat
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 120
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac02 }}
+        template: download
+        state: started
+        template_options: -d ubuntu -r xenial -a amd64
+      become: yes
+    - name: Crea contenedor zap
+      lxc_container:
+        name: zap
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 120
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac03 }}
+        template: download
+        state: started
+        template_options: -d ubuntu -r xenial -a amd64
+      become: yes
+    - name: Pausa para esperar que levante contenedor
+      pause:
+        seconds: 10
+    - name: Crea configuración base para todos los contenedores
+      command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
+      with_nested:
+        - [ 'webgoat', 'zap' ]
+        - [ 'apt-get update', 'apt-get dist-upgrade -y', 'apt-get install python ssh sudo psmisc -y', 'systemctl enable ssh', 'systemctl start ssh', 'useradd -s /bin/bash -G sudo -m -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore' ]
+      become: yes
+    - name: Descarga webgoat en contenedor de webgoat
+      command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
+      with_nested:
+        - [ 'webgoat' ]
+        - [ 'wget -c https://github.com/WebGoat/WebGoat/releases/download/7.1/webgoat-container-7.1.war' ]
+      become: yes
+    - name: Descaga zap en contenedor de zap
+      command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
+      with_nested:
+        - [ 'zap' ]
+        - [ 'wget -c https://github.com/zaproxy/zaproxy/releases/download/2.6.0/ZAP_2.6.0_Linux.tar.gz' ]
+      become: yes

@@ -1,0 +1,36 @@
+---
+- name: Configura servicios a monitorear
+  hosts: inseguro
+  tasks:
+    - name: Instala paquetes requeridos
+      apt:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - cyrus-imapd
+        - postfix
+      become: yes
+    - name: Habilita servicios
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - cyrus-imapd.service
+        - postfix.service
+      become: yes
+    - name: Cambia clave de root
+      command: usermod -p '$6$BPKar9D5$icMnv/Q02nk3N9l25JqSIE76eXWWo6uJI.yAhgMwIHSLzcRyliy5rvboSG1sDtfmcSksfNu6H1YLixfeUt2AQ.' root
+      become: yes
+    - name: Habilita SSH para root
+      replace: >
+        regexp="PermitRootLogin prohibit-password"
+        replace="PermitRootLogin yes"
+        dest=/etc/ssh/sshd_config
+      become: yes
+    - name: Reinicia SSH
+      service:
+        name: ssh
+        state: restarted
+        enabled: yes
+      become: yes

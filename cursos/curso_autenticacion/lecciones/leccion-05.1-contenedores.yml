@@ -1,0 +1,39 @@
+---
+- name: Crea contenedores necesarios para el curso
+  hosts: fisicos
+  tasks:
+    - name: Apaga todos los contenedores
+      command: "lxc-stop -n {{ item }}"
+      with_items:
+        - inseguro
+      become: yes
+      ignore_errors: true
+    - name: Destruye todos los contenedores
+      command: "lxc-destroy -n {{ item }}"
+      with_items:
+        - inseguro
+      become: yes
+      ignore_errors: true
+    - name: Crea contenedor inseguro
+      lxc_container:
+        name: inseguro
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 120
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac01 }}
+        template: download
+        state: started
+        template_options: -d ubuntu -r xenial -a amd64
+      become: yes
+    - name: Pausa para esperar que levante contenedor
+      pause:
+        seconds: 30
+    - name: Crea configuración base para todos los contenedores
+      command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
+      with_nested:
+        - [ 'inseguro' ]
+        - [ 'apt-get update', 'apt-get dist-upgrade -y', 'apt-get install python ssh sudo psmisc -y', 'systemctl enable ssh', 'systemctl start ssh', 'useradd -s /bin/bash -G sudo -m -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore' , 'mkdir ~greencore/.ssh/', 'wget -O ~greencore/.ssh/authorized_keys https://raw.githubusercontent.com/fede2cr/ansible_greencore/master/files/authorized_keys', 'chown -R greencore:greencore ~greencore/.ssh' ]
+      become: yes

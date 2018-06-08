@@ -1,0 +1,19 @@
+---
+- name: Configura servicios a monitorear
+  hosts: inseguro
+  tasks:
+    - name: Crea usuarios para laboratorios, con claves sacas de crunch
+      user:
+        name: hugo
+        password: '$6$bqUYLYOh$4FN9yuzWTNXQmwvG3geKH6M2z7/p..W0tM6m7pxviS5vXUrUr3DGv98EFXftbGcHXJnLxbGcrA3peVmO/u4xn.'
+      become: yes
+    - name: Crea usuarios para laboratorios, con claves sacas de crunch
+      user:
+        name: paco
+        password: '$6$lwj07tAU$vtO3.NuV80iQjDfVu0skHP3LV0Myq3J7PlDxHvSiqx0Cc1S998IniZqjX7NUEvj2225uW49MLn9dwlSnGb/.o/'
+      become: yes
+    - name: Crea usuarios para laboratorios, con claves sacas de crunch
+      user:
+        name: luis
+        password: '$6$LCRI78HV$PVujoOO/cBayfFsGg2mg60A4bVuvMWwL.3bL6dACs8lzFRvDZ5U72zWHaHAB2eMcBf62qZBwKchCl9G0pvWL/1'
+      become: yes
