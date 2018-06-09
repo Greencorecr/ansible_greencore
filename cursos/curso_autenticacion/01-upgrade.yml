@@ -1,0 +1,24 @@
+---
+- name: Actualiza los equipos fisicos a utilizar en las aulas
+  hosts: fisicos
+  strategy: free
+  tasks:
+    - name: Instala aptitude (requerido por ansible)
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: yes
+      become: yes
+    - name: Actualiza cache
+      apt:
+        update_cache: yes
+      become: yes
+    - name: Actualiza paquetes
+      apt:
+        upgrade: dist
+      become: yes
+      ignore_errors: true
+    - name: autoremueve
+      apt:
+        autoremove: yes
+      become: yes
