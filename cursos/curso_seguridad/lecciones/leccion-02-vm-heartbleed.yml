@@ -19,5 +19,8 @@
         dest: /var/lib/libvirt/images/heartbleed.qcow2.bz2
         mode: 0775
         owner: "{{ ansible_user }}"
+      become: yes
     - name: Descomprime imagen de ubuntu1204 usando deteccion de threads
       command: pbzip2 -d /var/lib/libvirt/images/heartbleed.qcow2.bz2
+      become: yes
+
