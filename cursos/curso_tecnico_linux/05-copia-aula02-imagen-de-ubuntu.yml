@@ -1,0 +1,36 @@
+---
+- name: Instala la máquina virtual de Ubuntu
+  hosts: fisicos
+  strategy: free
+  tasks:
+    - name: Instala paquetes requeridos por la receta
+      apt:
+        name: pbzip2
+        state: present
+      become: yes
+    - name: Plantilla de jinja para XML de VM de ubuntu
+      template:
+        src: files/ubuntu16.04-02.xml.j2
+        dest: /tmp/ubuntu16.04-02.xml
+        mode: 0644
+        owner: root
+        group: root
+      become: yes
+    - name: Importa archivo XML para VM de ubuntu
+      command: virsh define /tmp/ubuntu16.04-02.xml
+      become: yes
+    - name: Mueve imagen de ubuntu-server a directorio de imagenes
+      get_url:
+        url: http://10.42.30.5/vms/ubuntu16.04-02.qcow2.bz2
+        dest: /var/lib/libvirt/images/ubuntu16.04-02.qcow2.bz2
+        mode: 0775
+        owner: "{{ ansible_user }}"
+      become: yes
+    - name: Descomprime imagen de ubuntu usando deteccion de threads
+      command: pbzip2 -d /var/lib/libvirt/images/ubuntu16.04-02.qcow2.bz2
+      become: yes
+    - name: Reinicia servicio libvirt-bin
+      service:
+        name: libvirt-bin
+        state: restarted
+      become: yes

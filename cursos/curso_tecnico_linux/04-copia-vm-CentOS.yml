@@ -29,3 +29,8 @@
     - name: Descomprime imagen de FreePBX usando deteccion de threads
       command: pbzip2 -d /var/lib/libvirt/images/CentOS.qcow2.bz2
       become: yes
+    - name: Reinicia servicio libvirt-bin
+      service:
+        name: libvirt-bin
+        state: restarted
+      become: yes
