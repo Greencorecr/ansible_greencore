@@ -1,8 +1,7 @@
 [all:vars]
-ansible_user=greencore
+#ansible_user=user
+ansible_user=alvaro
 
 [fisicos]
-10.42.25.20 
-10.42.25.21 
-10.42.25.22 
-10.42.25.23 
+#192.168.66.13
+10.42.22.130
