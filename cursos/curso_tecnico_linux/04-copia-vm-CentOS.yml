@@ -26,7 +26,7 @@
         mode: 0775
         owner: "{{ ansible_user }}"
       become: yes
-    - name: Descomprime imagen de FreePBX usando deteccion de threads
+    - name: Descomprime imagen de CentOS usando deteccion de threads
       command: pbzip2 -d /var/lib/libvirt/images/CentOS.qcow2.bz2
       become: yes
     - name: Reinicia servicio libvirt-bin
