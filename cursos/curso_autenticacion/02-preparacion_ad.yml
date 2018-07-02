@@ -6,7 +6,7 @@
     debconf:
       name: krb5-config
       question: krb5-config/default_realm
-      value: greencore.local
+      value: greencore.int
       vtype: string
     become: yes
   - name: Instala paquetes requeridos para esta receta
@@ -14,33 +14,31 @@
       name: "{{ item }}"
       state: installed
     with_items:
-      - paquete1
-      - ...
+      - realmd
+      - ntp
+      - sssd
+      - adcli
+      - krb5-user 
+      - sssd-tools
+      - samba-common
+      - packagekit
+      - samba-common-bin
+      - samba-libs
+    become: yes
+  - name: Configura servicio de hora
+    service:
+      name: ntp
+      enabled: yes
+      state: started
     become: yes
   - name: Configuración de interfaces
     copy:
-      src: files/interfaces
-      dest: /etc/network/interfaces
+      src: files/realmd.conf
+      dest: /etc/realmd.conf
       mode: 0644
       owner: root
       group: root
     become: yes
-#
-#
-#
-#
-## Extra: Biosdevname   
-  - name: Deshabilita biosdevname
-    lineinfile:
-      regexp: '^GRUB_CMDLINE_LINUX=""'
-      dest: "/etc/default/grub"
-      line: 'GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"'
-      state: present
-      backrefs: yes
-    become: yes
-    register: grub_default_biosdevname
-  - name: Actualiza grub luego de deshabilitar biosdevname
-    command: grub-mkconfig -o /boot/grub/grub.cfg
-    ignore_errors: true
-    become: yes
-    when: grub_default_biosdevname.changed
+  - name: Pausa para sincronizado de hora
+    pause:
+      seconds: 10
