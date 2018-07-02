@@ -29,7 +29,7 @@
     - name: Descomprime imagen de ubuntu usando deteccion de threads
       command: pbzip2 -d /var/lib/libvirt/images/ubuntu16.04-02.qcow2.bz2
       become: yes
-    - name: Reinicia servicio libvirt-bin
+    - name: Reinicia el servicio libvirt-bin
       service:
         name: libvirt-bin
         state: restarted
