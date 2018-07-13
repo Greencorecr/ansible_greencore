@@ -1,0 +1,165 @@
+---
+- name: Preinstala la base de Kali Linux para Raspberry Pi
+  hosts: pi
+  tasks:
+  - name: Elimina bash_history de root
+    file:
+      path: /root/.bash_history
+      state: absent
+    ignore_errors: true
+  - name: Instala aptitude (requerido por ansible)
+    apt:
+      name: aptitude
+      state: latest
+      update_cache: yes
+  - name: Remueve paquetes no necesarios para ambiente educativo
+    apt:
+      name: "{{ item }}"
+      state: absent
+      purge: yes
+    with_items:
+      - modemmanager
+      - network-manager
+  - name: Define multi-user.target como default en systemd
+    command: systemctl set-default multi-user.target
+    when: ansible_architecture == 'armv7l'
+  - name: Remueve paquetes de sistema grafico
+    apt:
+      name: "{{ item }}"
+      state: absent
+      purge: yes
+    with_items:
+      - xfwm4
+      - xfce4
+      - thunar
+      - lightdm
+      - albatross-gtk-theme
+      - blackbird-gtk-theme
+      - bluebird-gtk-theme
+      - greybird-gtk-theme
+      - gtk-update-icon-cache
+      - gtk2-engines-murrine
+      - gtk3-engines-xfce
+      - libcanberra-gtk-module
+      - libcanberra-gtk0
+      - libcanberra-gtk3-0
+      - libcanberra-gtk3-module
+      - libgtk-3-0:armhf
+      - libgtk-3-bin
+      - libgtk-3-common
+      - libgtk2.0-0
+      - libgtk2.0-bin
+      - libgtk2.0-common
+      - libgtkmm-3.0-1v5
+      - lightdm-gtk-greeter
+      - murrine-themes
+      - python-gtk2
+      - qt5-gtk-platformtheme
+    when: ansible_architecture == 'armv7l'
+  - name: Actualiza cache, paquetes, y autoremueve
+    apt:
+      upgrade: dist
+      update_cache: yes
+      # autoremove not available in 16.04's ansible
+      autoremove: yes
+  - name: Instala paquetes requeridos por los instructores
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - vim
+      - pwgen
+      - screen
+      - openssh-server
+      - wakeonlan
+      - git
+      - python3-pip
+      - openvas
+      - avahi-daemon
+      - git
+      - gawk
+      - qpdf
+      - adb
+      - flex
+      - bison
+      - libgmp3-dev
+      - tcpdump
+      - sparta
+      - crunch
+      - nikto
+      - netcat
+      - bsdgames
+      - rkhunter
+      - steghide
+      - testdisk
+      - wipe
+      - zaproxy
+      - openjdk-8-jre-headless
+      - python-pip
+      - recon-ng
+      - metasploit-framework
+      - bridge-utils
+  - name: Plantilla de jinja para archivo interfaces
+    copy:
+      src: files/interfaces
+      dest: /etc/network/interfaces
+      mode: 0644
+      owner: root
+      group: root
+    become: yes
+  - name: Habilita anuncio de workstation en avahi
+    lineinfile:
+      regexp: '^publish-workstation=no'
+      dest: "/etc/avahi/avahi-daemon.conf"
+      line: 'publish-workstation=yes'
+      state: present
+      backrefs: yes
+  - name: Habilita anuncio de IP en avahi
+    lineinfile:
+      regexp: '^#publish-addresses=yes'
+      dest: "/etc/avahi/avahi-daemon.conf"
+      line: 'publish-addresses=yes'
+      state: present
+      backrefs: yes
+  - name: Starts and enable services
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: restarted
+    with_items:
+      - avahi-daemon.service
+      - postgresql.service
+  - name: Instala paquetes con pip3
+    pip:
+      name: "{{ item }}"
+      state: latest
+      executable: pip3
+    with_items:
+      - asciinema
+      - pip
+      - jupyter
+      - bash_kernel
+      - droopescan
+  - name: Ejecuta python3 -m bash_kernel.install
+    command: python3 -m bash_kernel.install
+  - name: Genera config de jupyter
+    command: "jupyter notebook --generate-config --allow-root"
+    ignore_errors: true
+  - name: Agrega clave "greencore" para autenticacion
+    lineinfile:
+      regexp: "^#c.NotebookApp.password"
+      dest: "{{ ansible_env.HOME }}/.jupyter/jupyter_notebook_config.py"
+      line: "c.NotebookApp.password = 'sha512:8c79bf18770a:e874ca1ba53f2538c308830430211c3604fb4da03feefc64280584b690ff41448445490e38a697ba29049f69d003a5c2bf70bfed547e9fb6858f06ba202774bc' "
+      state: present
+  - name: Activa módulos de jupyter
+    command: jupyter nbextension enable --py --sys-prefix widgetsnbextension
+  - name: Cambia contraseña de root a "greencore"
+    command: usermod -p '$6$k8ckuEU6deyRYdcu$RtX9ZpHNezlcjGV2v4R3UarQt4GbY92av6O9gzI6hWaYZhySRlA/60NlWL7/NByHCH/enCT.f9TPIzBuBRBP/1' root
+  - name: Configura BD modulos de metasploit
+    command: msfconsole -q -x "msfdb init; db_rebuild_cache ; exit -y"
+  - name: Prepara sistema de openvas
+    command: openvas-setup
+  - name: Libera espacio en sistema de archivos
+    command: tune2fs -m0 -r0 /dev/mmcblk0p2
+  - name: Define LABEL para raiz
+    command: tune2fs -L rootfs /dev/mmcblk0p2 
