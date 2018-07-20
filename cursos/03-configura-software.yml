@@ -20,8 +20,8 @@
       executable: pip3
     with_items:
       - asciinema
-# Falla ansible 2.4?
-#      - ansible
+      - mu-editor
+      - ansible
     become: yes
   - name: Agregamos llave de GPG para Visual Code
     apt_key:
@@ -89,6 +89,11 @@
       - distcc-pump
       - distccmon-gnome  
       - ccache
+      - bison
+      - flex
+      - libncurses-dev
+      - libelf-dev
+      - libssl-dev
     become: yes
   - name: Agrega a usuario ansible_user en grupos necesarios
     user:
