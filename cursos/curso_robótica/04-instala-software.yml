@@ -81,7 +81,7 @@
       become: yes
     - name: Descarga CircuitPython para ESP8266 Feather
       get_url:
-        url: https://github.com/adafruit/circuitpython/releases/download/2.2.0/adafruit-circuitpython-feather_huzzah-2.2.3.bin
+        url: https://github.com/adafruit/circuitpython/releases/download/3.0.0/adafruit-circuitpython-feather_huzzah-3.0.0.bin
         dest: "{{ ansible_env.HOME }}/"
     - name: Copia instalador de arduino
       unarchive:
@@ -106,6 +106,7 @@
         - arduino:avr
         - adafruit:samd
         - sifive:riscv
+        - esp32:esp32
     - name: Instala librerias adicionales en Arduino
       command: arduino --install-library "{{ item }}"
       with_items:
