@@ -95,7 +95,7 @@
       command: /usr/local/arduino-1.8.5/install.sh
       become: yes
     - name: Configura tarjetas adicionales para Arduino
-      command: arduino --pref boardsmanager.additional.urls=http://arduino.esp8266.com/stable/package_esp8266com_index.json,http://static.dev.sifive.com/bsp/arduino/package_sifive_index.json,https://adafruit.github.io/arduino-board-index/package_adafruit_index.json,https://lowpowerlab.github.io/MoteinoCore/package_LowPowerLab_index.json --save-prefs
+      command: arduino --pref boardsmanager.additional.urls=http://arduino.esp8266.com/stable/package_esp8266com_index.json,http://static.dev.sifive.com/bsp/arduino/package_sifive_index.json,https://adafruit.github.io/arduino-board-index/package_adafruit_index.json,https://lowpowerlab.github.io/MoteinoCore/package_LowPowerLab_index.json,https://dl.espressif.com/dl/package_esp32_index.json --save-prefs
     - name: Instala placas adicionales en Arduino
       command: arduino --install-boards "{{ item }}"
       with_items:
