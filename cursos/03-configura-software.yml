@@ -99,6 +99,11 @@
       - nodejs
       - nodejs-legacy
     become: yes
+  - name: Instala paquete de Atom usando ATP
+    apt:
+      deb: https://github.com/atom/atom/releases/download/v1.29.0/atom-amd64.deb
+      state: present
+    become: yes
   - name: Agrega a usuario ansible_user en grupos necesarios
     user:
       name: "{{ ansible_user }}"
