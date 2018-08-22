@@ -22,6 +22,7 @@
       - asciinema
       - mu-editor
       - ansible
+      - apio
     become: yes
   - name: Agregamos llave de GPG para Visual Code
     apt_key:
@@ -94,6 +95,9 @@
       - libncurses-dev
       - libelf-dev
       - libssl-dev
+      - npm
+      - nodejs
+      - nodejs-legacy
     become: yes
   - name: Agrega a usuario ansible_user en grupos necesarios
     user:
@@ -117,4 +121,9 @@
       owner: root
       group: root
       mode: 0644
+    become: yes
+  - name: Instala node-red de forma global
+    npm:
+      name: node-red
+      global: yes
     become: yes

@@ -15,3 +15,8 @@
         dest=/etc/apt/sources.list
         state=absent
       become: yes
+    - name: add repo for nodesource
+      apt_repository:
+        repo: 'deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main'
+        update_cache: yes
+      become: yes
