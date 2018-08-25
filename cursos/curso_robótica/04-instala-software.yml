@@ -63,7 +63,7 @@
     - name: Crea liga de arduino
       file:
         state: link
-        src: /usr/local/arduino-1.8.5/arduino
+        src: /usr/local/arduino-1.8.6/arduino
         dest: /usr/bin/arduino
         force: yes
       become: yes
@@ -86,16 +86,16 @@
     - name: Copia instalador de arduino
       unarchive:
         dest: /usr/local/
-        src: https://downloads.arduino.cc/arduino-1.8.5-linux64.tar.xz
+        src: https://downloads.arduino.cc/arduino-1.8.6-linux64.tar.xz
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         remote_src: yes
       become: yes
     - name: Ejecuta instalador de Arduino
-      command: /usr/local/arduino-1.8.5/install.sh
+      command: /usr/local/arduino-1.8.6/install.sh
       become: yes
     - name: Configura tarjetas adicionales para Arduino
-      command: arduino --pref boardsmanager.additional.urls=http://arduino.esp8266.com/stable/package_esp8266com_index.json,http://static.dev.sifive.com/bsp/arduino/package_sifive_index.json,https://adafruit.github.io/arduino-board-index/package_adafruit_index.json,https://lowpowerlab.github.io/MoteinoCore/package_LowPowerLab_index.json,https://dl.espressif.com/dl/package_esp32_index.json --save-prefs
+      command: arduino --pref boardsmanager.additional.urls=http://arduino.esp8266.com/stable/package_esp8266com_index.json,http://static.dev.sifive.com/bsp/arduino/package_sifive_index.json,https://adafruit.github.io/arduino-board-index/package_adafruit_index.json,https://lowpowerlab.github.io/MoteinoCore/package_LowPowerLab_index.json,https://dl.espressif.com/dl/package_esp32_index.json,http://dan.drown.org/stm32duino/package_STM32duino_index.json --save-prefs
     - name: Instala placas adicionales en Arduino
       command: arduino --install-boards "{{ item }}"
       with_items:
@@ -107,6 +107,7 @@
         - adafruit:samd
         - sifive:riscv
         - esp32:esp32
+        - stm32duino:STM32F1
     - name: Instala librerias adicionales en Arduino
       command: arduino --install-library "{{ item }}"
       with_items:
