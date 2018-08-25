@@ -95,6 +95,12 @@
       command: /usr/local/arduino-1.8.6/install.sh
       become: yes
     - name: Configura tarjetas adicionales para Arduino
+      # ESP8266 -> http://www.crcibernetica.com/adafruit-feather-huzzah-with-esp8266-wifi/
+      # RISCV HiFive1 -> https://www.crowdsupply.com/sifive/hifive1/
+      # Adafruit -> https://www.adafruit.com/feather
+      # Moteino -> http://www.crcibernetica.com/miniwireless-rfm69hw-915mhz/
+      # ESP32 -> http://www.crcibernetica.com/ttgo-esp32-with-lora-and-oled-display-us915/
+      # STM32 -> http://www.crcibernetica.com/stm32f103c8t6-arm-stm32-blue-pill-microcontroller-board/
       command: arduino --pref boardsmanager.additional.urls=http://arduino.esp8266.com/stable/package_esp8266com_index.json,http://static.dev.sifive.com/bsp/arduino/package_sifive_index.json,https://adafruit.github.io/arduino-board-index/package_adafruit_index.json,https://lowpowerlab.github.io/MoteinoCore/package_LowPowerLab_index.json,https://dl.espressif.com/dl/package_esp32_index.json,http://dan.drown.org/stm32duino/package_STM32duino_index.json --save-prefs
     - name: Instala placas adicionales en Arduino
       command: arduino --install-boards "{{ item }}"
