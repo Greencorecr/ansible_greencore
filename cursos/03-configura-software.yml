@@ -13,17 +13,6 @@
       - deja-dup
       - aptdaemon
       - update-manager-core
-  - name: Instala módulos de python con pip3
-    pip:
-      name: "{{ item }}"
-      state: latest
-      executable: pip3
-    with_items:
-      - asciinema
-      - mu-editor
-      - ansible
-      - apio
-    become: yes
   - name: Agregamos llave de GPG para Visual Code
     apt_key:
       url: https://packages.microsoft.com/keys/microsoft.asc
@@ -98,12 +87,32 @@
       - npm
       - nodejs
       - nodejs-legacy
+      - rtl-sdr
+      - gqrx-sdr
     become: yes
   - name: Instala paquete de Atom usando ATP
     apt:
       deb: https://github.com/atom/atom/releases/download/v1.29.0/atom-amd64.deb
       state: present
     become: yes
+  - name: Instala módulos de python con pip3
+    pip:
+      name: "{{ item }}"
+      state: latest
+      executable: pip3
+    with_items:
+      - asciinema
+      - mu-editor
+      - ansible
+      - apio
+    become: yes
+  - name: Instala módulos de python con pip
+    pip:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - platformio
+        #    become: yes
   - name: Agrega a usuario ansible_user en grupos necesarios
     user:
       name: "{{ ansible_user }}"
@@ -127,8 +136,11 @@
       group: root
       mode: 0644
     become: yes
-  - name: Instala node-red de forma global
+  - name: Instala paquetes de npm
     npm:
-      name: node-red
+      name: "{{ item }}"
       global: yes
+    with_items:
+      - node-red
+      - terminalizer
     become: yes
