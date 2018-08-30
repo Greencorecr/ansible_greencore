@@ -13,23 +13,10 @@
       - deja-dup
       - aptdaemon
       - update-manager-core
-  - name: Agregamos llave de GPG para Visual Code
-    apt_key:
-      url: https://packages.microsoft.com/keys/microsoft.asc
-      state: present
-      keyring: /etc/apt/trusted.gpg.d/microsoft.gpg
-    become: yes
-  - name: Crea archivo de fuentes para paquetes de Visual Code
-    copy:
-      dest: /etc/apt/sources.list.d/vscode.list
-      content: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
-      owner: root
-      group: root
-    become: yes
-  - name: Actualiza cache
-    apt:
-      update_cache: yes
-    become: yes
+      - unattended-upgrades
+      - docker
+      - docker-engine
+      - docker.io
   - name: Usa debconf para decirle a wireshark que permita escucha a usuarios no-root
     debconf:
       name: wireshark-common
@@ -84,11 +71,14 @@
       - libncurses-dev
       - libelf-dev
       - libssl-dev
-      - npm
-      - nodejs
-      - nodejs-legacy
       - rtl-sdr
       - gqrx-sdr
+      - nodejs
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - docker-ce
     become: yes
   - name: Instala paquete de Atom usando ATP
     apt:
@@ -142,5 +132,5 @@
       global: yes
     with_items:
       - node-red
-      - terminalizer
+#      - terminalizer
     become: yes
