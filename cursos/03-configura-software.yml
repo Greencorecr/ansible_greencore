@@ -79,6 +79,7 @@
       - curl
       - software-properties-common
       - docker-ce
+      - openjdk-8-jre
     become: yes
   - name: Instala paquete de Atom usando ATP
     apt:

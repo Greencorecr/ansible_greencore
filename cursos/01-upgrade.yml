@@ -42,6 +42,16 @@
       apt_repository:
         repo: deb https://deb.torproject.org/torproject.org xenial main
       become: yes
+    - name: Agregamos llave de GPG para Jenkins
+      apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+        state: present
+        keyring: /etc/apt/trusted.gpg.d/microsoft.gpg
+      become: yes
+    - name: Agrega repo para Jenkins
+      apt_repository:
+        repo: deb http://pkg.jenkins.io/debian binary/
+      become: yes
     - name: Instala aptitude (requerido por ansible)
       apt:
         name: aptitude
