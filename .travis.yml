@@ -8,9 +8,10 @@ install:
   - sudo pip install ansible
 
 script:   
-  - "ansible-playbook -i inventory/hosts.example --syntax-check servidores/*yml cursos/*yml cursos/*/*yml cursos/*/*/*yml"
+  - "ansible-playbook -i inventory/hosts.example --syntax-check cursos/*yml cursos/*/*yml cursos/*/*/*yml"
   - "echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections"
   - "echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections"
   - "sudo apt-get remove -y postgresql-9.2 postgresql-9.3 postgresql-9.4 postgresql-9.5 postgresql-9.6 oracle-java7-installer oracle-java8-installer oracle-java9-installer oracle-java9-set-default oracle-java7-unlimited-jce-policy oracle-java8-unlimited-jce-policy oracle-java9-unlimited-jce-policy"
-  - "sudo ANSIBLE_CONFIG=.ansible-travis.cfg ansible-playbook -i inventory/hosts.example servidores/01-upgrade.yml"
-  - "sudo ANSIBLE_CONFIG=.ansible-travis.cfg ansible-playbook -i inventory/hosts.example servidores/02-base_setup.yml"
+  - "sudo ANSIBLE_CONFIG=.ansible-travis.cfg ansible-playbook -i inventory/hosts.example cursos/01-upgrade.yml"
+  - "sudo ANSIBLE_CONFIG=.ansible-travis.cfg ansible-playbook -i inventory/hosts.example cursos/02-preparacion_labs.yml"
+  - "sudo ANSIBLE_CONFIG=.ansible-travis.cfg ansible-playbook -i inventory/hosts.example cursos/03-configura-software.yml.yml"
