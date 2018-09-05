@@ -3,6 +3,45 @@
   hosts: fisicos
   strategy: free
   tasks:
+    - name: Agregamos llave de GPG para Visual Code
+      apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+        keyring: /etc/apt/trusted.gpg.d/microsoft.gpg
+      become: yes
+    - name: Crea archivo de fuentes para paquetes de Visual Code
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+      become: yes
+    - name: Agregamos llave de GPG para Node Source
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+        keyring: /etc/apt/trusted.gpg.d/nodesource.gpg
+      become: yes
+    - name: add repo for nodesource
+      apt_repository:
+        repo: 'deb https://deb.nodesource.com/node_10.x {{ ansible_distribution_release }} main'
+      become: yes
+    - name: Agregamos llave de GPG para Docker
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+        keyring: /etc/apt/trusted.gpg.d/docker.gpg
+      become: yes
+    - name: Crea archivo de fuentes para Docker-CE
+      apt_repository:
+        repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable'
+      become: yes
+    - name: Agregamos llave de GPG para Tor
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
+      become: yes
+    - name: Agrega repo para Tor
+      apt_repository:
+        repo: deb https://deb.torproject.org/torproject.org xenial main
+      become: yes
     - name: Instala aptitude (requerido por ansible)
       apt:
         name: aptitude
