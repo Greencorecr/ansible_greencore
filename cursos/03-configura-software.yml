@@ -3,7 +3,7 @@
   hosts: fisicos
   strategy: free
   tasks:
-  - name: Remueve paqute deja-dup
+  - name: Remueve paquetes en conflicto con los laboratorios
     apt:
       name: "{{ item }}"
       state: absent

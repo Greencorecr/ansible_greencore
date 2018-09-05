@@ -129,3 +129,7 @@
       - inseguro
     become: yes
     ignore_errors: true
+  - name: Deshabilita tracker
+    command: tracker daemon -t
+  - name: Deshabilita tracker
+    command: tracker daemon -k
