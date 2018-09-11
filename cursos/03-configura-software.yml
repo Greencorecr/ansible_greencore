@@ -127,11 +127,59 @@
       group: root
       mode: 0644
     become: yes
+  - name: Agrega acl para poder modificar /usr/local como greencore
+    acl:
+      path: /usr/local
+      entity: "{{ ansible_user }}"
+      etype: user
+      permissions: rwX
+      state: present
+      recursive: yes
+    become: yes
+  - name: Agrega acl para poder modificar /usr/local como greencore
+    acl:
+      path: /usr/lib/node_modules
+      entity: "{{ ansible_user }}"
+      etype: user
+      permissions: rwX
+      state: present
+      recursive: yes
+    become: yes
   - name: Instala paquetes de npm
     npm:
       name: "{{ item }}"
       global: yes
     with_items:
       - node-red
-#      - terminalizer
+    become: yes
+    #  - name: Instala paquetes de npm
+    #    npm:
+    #      name: "{{ item }}"
+    #      global: yes
+    #    with_items:
+    #      - terminalizer
+  - name: Instala PyCharm
+    unarchive:
+      src: http://10.42.30.5/vms/software/pycharm-community-2018.2.3.tar.gz
+      mode: 0775
+      owner: "{{ ansible_user }}"
+      dest: "/usr/local/"
+      remote_src: yes
+    become: yes
+  - name: Pre-instala PyCharm
+    unarchive:
+      src: http://10.42.30.5/vms/software/PyCharmCE2018.2-home.tar.bz2
+      mode: 0775
+      owner: "{{ ansible_user }}"
+      dest: "{{ ansible_env.HOME }}/"
+      remote_src: yes
+  - name: Agrega Pycharm al PATH
+    copy:
+      dest: /etc/profile.d/pycharm-path.sh
+      content: |
+              #!/usr/bin/env bash
+              export PATH=$PATH:/usr/local/pycharm-community-2018.2.3/bin/
+      mode: 0755
+      owner: root
+      group: root
     become: yes
