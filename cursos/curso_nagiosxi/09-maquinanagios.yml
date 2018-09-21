@@ -1,0 +1,36 @@
+---
+- name: Instala la máquina virtual de Nagios
+  hosts: fisicos
+  strategy: free
+  tasks:
+    - name: Instala paquetes requeridos por la receta
+      apt:
+        name: pbzip2
+        state: present
+      become: yes
+    - name: Plantilla de jinja para XML de VM de Nagios
+      template:
+        src: files/NagiosCore.xml.j2
+        dest: /tmp/NagiosCore.xml
+        mode: 0644
+        owner: root
+        group: root
+      become: yes
+    - name: Importa archivo XML para VM de Nagios
+      command: virsh define /tmp/NagiosCore.xml
+      become: yes
+    - name: Mueve imagen de Nagios a directorio de imagenes
+      get_url:
+        url: http://10.42.30.5/vms/NagiosCore.qcow2.bz2
+        dest: /var/lib/libvirt/images/NagiosCore.qcow2.bz2
+        mode: 0775
+        owner: "{{ ansible_user }}"
+      become: yes
+    - name: Descomprime imagen de Nagios usando deteccion de threads
+      command: pbzip2 -d /var/lib/libvirt/images/NagiosCore.qcow2.bz2
+      become: yes
+    - name: Reinicia servicio libvirt-bin
+      service:
+        name: libvirt-bin
+        state: restarted
+      become: yes
