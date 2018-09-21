@@ -1,0 +1,39 @@
+---
+- name: Crea contenedores necesarios
+  hosts: fisicos
+  tasks:
+    - name: Apaga todos los contenedores
+      command: "lxc-stop -n {{ item }}"
+      with_items:
+        - practica
+      become: yes
+      ignore_errors: true
+    - name: Destruye todos los contenedores
+      command: "lxc-destroy -n {{ item }}"
+      with_items:
+        - practica
+      become: yes
+      ignore_errors: true
+    - name: Crea contenedor de practica
+      lxc_container:
+        name: practica
+        container_log: true
+        container_config:
+          - lxc.network.link = br0
+          - lxc.start.auto = 1
+          - lxc.start.delay = 120
+          - lxc.start.order = 0
+          - lxc.network.hwaddr = {{ mac01 }}
+        template: download
+        state: started
+        template_options: --dist ubuntu --release xenial --arch amd64
+      become: yes
+    - name: Pausa para esperar que levante contenedor
+      pause:
+        seconds: 10
+    - name: Crea configuración base para todos los contenedores
+      command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
+      with_nested:
+        - [ 'practica' ]
+        - [ "sed -i 's/archive.ubuntu.com/ubuntu-mirror.greencore.int/g' /etc/apt/sources.list ", 'apt-get update', 'apt-get dist-upgrade -y', 'apt-get install ssh bash-completion -y', 'systemctl enable ssh', 'systemctl start ssh', 'useradd -G sudo -d /home/greencore -m -s /bin/bash -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore', 'mkdir ~greencore/.ssh/', 'chown -R greencore:greencore ~greencore/.ssh' ]
+      become: yes
