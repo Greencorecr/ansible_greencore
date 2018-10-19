@@ -60,7 +60,7 @@
     become: yes
   - name: Configura defaults de LXC
     lineinfile:
-      regexp: "^lxc.network.link = lxcbr0"
+      regexp: "lxc.network.link = lxcbr0"
       dest: "/etc/lxc/default.conf"
       line: "lxc.network.link = br0"
       state: present
@@ -77,7 +77,7 @@
     copy:
       dest: "{{ ansible_env.HOME }}/.ssh/config"
       content: |
-              Host 10.42.25.*
+              Host 10.42.24.*
                 StrictHostKeyChecking no
                 UserKnownHostsFile=/dev/null
       owner: "{{ ansible_user }}"
