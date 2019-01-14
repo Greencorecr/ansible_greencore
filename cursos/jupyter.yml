@@ -22,12 +22,9 @@
       become: yes
     - name: Instala modulo de Python de Jupyter, y bash_kernel
       pip:
-        name: "{{ item }}"
+        name: ['jupyter', 'bash_kernel']
         executable: pip3
         state: latest
-      with_items:
-        - jupyter
-        - bash_kernel
       become: yes
     - name: Ejecuta python3 -m bash_kernel.install
       command: python3 -m bash_kernel.install
@@ -37,8 +34,9 @@
       command: python3 -m bash_kernel.install
       become: yes
       register: kernel
-    - command: "jupyter notebook --generate-config"
-      become: no
+    - name: Configura jupyter notebook
+      command: "jupyter notebook --generate-config"
+      become: yes
       ignore_errors: true
     - name: Agrega clave "greencore" para autenticacion
       lineinfile:
