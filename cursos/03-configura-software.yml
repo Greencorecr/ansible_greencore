@@ -5,18 +5,9 @@
   tasks:
   - name: Remueve paquetes en conflicto con los laboratorios
     apt:
-      name: "{{ item }}"
+      name: ['modemmanager', 'deja-dup', 'aptdaemon', 'update-manager-core', 'unattended-upgrades', 'docker', 'docker-engine', 'docker.io']
       state: absent
     become: yes
-    with_items:
-      - modemmanager
-      - deja-dup
-      - aptdaemon
-      - update-manager-core
-      - unattended-upgrades
-      - docker
-      - docker-engine
-      - docker.io
   - name: Usa debconf para decirle a wireshark que permita escucha a usuarios no-root
     debconf:
       name: wireshark-common
@@ -26,60 +17,8 @@
     become: yes
   - name: Instala paquetes requeridos por los instructores
     apt:
-      name: "{{ item }}"
+      name: ['vim', 'virt-manager', 'virtualbox', 'fritzing', 'bridge-utils', 'qemu-kvm', 'qemu-system', 'libvirt-bin', 'ubuntu-vm-builder', 'pwgen', 'gnome-shell', 'gnome-tweak-tool', 'chromium-browser', 'screen', 'byobu', 'openssh-server', 'dia', 'shutter', 'vlc', 'mpv', 'wakeonlan', 'git', 'python3-pip', 'avahi-discover', 'udpcast', 'pv', 'docker-compose', 'nmap', 'wireshark', 'etherape', 'iftop', 'pbzip2', 'distcc', 'distcc-pump', 'distccmon-gnome', 'ccache', 'bison', 'flex', 'libncurses-dev', 'libelf-dev', 'libssl-dev', 'rtl-sdr', 'gqrx-sdr', 'nodejs', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'openjdk-8-jre']
       state: present
-    with_items:
-      - vim
-      - virt-manager
-      - virtualbox
-      - fritzing
-      - bridge-utils
-      - qemu-kvm
-      - qemu-system
-      - libvirt-bin
-      - ubuntu-vm-builder
-      - pwgen
-      - gnome-shell
-      - gnome-tweak-tool
-      - chromium-browser
-      - screen
-      - byobu
-      - openssh-server
-      - dia
-      - shutter
-      - vlc
-      - mpv
-      - wakeonlan
-      - git
-      - python3-pip
-      - avahi-discover
-      - udpcast
-      - pv
-      - docker-compose
-      - code
-      - nmap
-      - wireshark
-      - etherape
-      - iftop
-      - pbzip2
-      - distcc
-      - distcc-pump
-      - distccmon-gnome  
-      - ccache
-      - bison
-      - flex
-      - libncurses-dev
-      - libelf-dev
-      - libssl-dev
-      - rtl-sdr
-      - gqrx-sdr
-      - nodejs
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-      - docker-ce
-      - openjdk-8-jre
     become: yes
   - name: Instala paquete de Atom usando ATP
     apt:
@@ -88,22 +27,15 @@
     become: yes
   - name: Instala módulos de python con pip3
     pip:
-      name: "{{ item }}"
+      name: ['asciinema', 'mu-editor', 'ansible', 'apio']
       state: latest
       executable: pip3
-    with_items:
-      - asciinema
-      - mu-editor
-      - ansible
-      - apio
     become: yes
   - name: Instala módulos de python con pip
     pip:
-      name: "{{ item }}"
+      name: ['platformio']
       state: latest
-    with_items:
-      - platformio
-        #    become: yes
+    become: yes
   - name: Agrega a usuario ansible_user en grupos necesarios
     user:
       name: "{{ ansible_user }}"
@@ -136,7 +68,7 @@
       state: present
       recursive: yes
     become: yes
-  - name: Agrega acl para poder modificar /usr/local como greencore
+  - name: Agrega acl para poder modificar /usr/lib/node_modules como greencore
     acl:
       path: /usr/lib/node_modules
       entity: "{{ ansible_user }}"
