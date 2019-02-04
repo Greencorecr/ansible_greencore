@@ -19,8 +19,8 @@
         - cyrus-imapd.service
         - postfix.service
       become: yes
-    - name: Cambia clave de root
-      command: usermod -p '$6$BPKar9D5$icMnv/Q02nk3N9l25JqSIE76eXWWo6uJI.yAhgMwIHSLzcRyliy5rvboSG1sDtfmcSksfNu6H1YLixfeUt2AQ.' root
+    - name: Cambia clave de root #honeypot
+      command: usermod -p '$6$59Z7LB.j$y/NWC8eTad11YLcBi/N6DedeJZsdEYfi40O5Pl0eAT4YgGqlBwDrlbszX3ux.ztIp3AkZODFYfwTfs3yeZqmW0' root
       become: yes
     - name: Habilita SSH para root
       replace: >
