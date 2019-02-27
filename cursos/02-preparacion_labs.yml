@@ -5,17 +5,8 @@
   tasks:
   - name: Instala paquetes requeridos para esta receta
     apt: 
-      name: "{{ item }}"
+      name: ['libpython-dev', 'gcc', 'lxc', 'lxc-dev', 'python-pip', 'libvirt-bin', 'chromium-browser', 'libguestfs-tools']
       state: present
-    with_items:
-      - libpython-dev
-      - gcc
-      - lxc
-      - lxc-dev
-      - python-pip
-      - libvirt-bin
-      - chromium-browser
-      - libguestfs-tools
     become: yes
   - name: Deshabilita biosdevname
     lineinfile:
