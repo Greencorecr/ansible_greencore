@@ -84,12 +84,13 @@
     with_items:
       - node-red
     become: yes
-    #  - name: Instala paquetes de npm
-    #    npm:
-    #      name: "{{ item }}"
-    #      global: yes
-    #    with_items:
-    #      - terminalizer
+  #- name: Instala paquetes de npm
+  #  npm:
+  #    name: "{{ item }}"
+  #    global: yes
+  #  with_items:
+  #    - terminalizer
+  #  become: yes  
   - name: Instala PyCharm
     unarchive:
       src: http://10.42.30.5/vms/software/pycharm-community-2018.2.3.tar.gz
