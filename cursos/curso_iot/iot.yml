@@ -1,0 +1,25 @@
+---
+- name: Instala laboratorio para clases de IoT
+  hosts: fisicos
+  strategy: free
+  tasks:
+    - name: Instala librerias adicionales en Arduino
+      command: arduino --install-library "{{ item }}"
+      with_items:
+        - "IBM LMIC framework"
+        - "ESP8266 and ESP32 Oled Driver for SSD1306 display"
+        - "Adafruit IO Arduino"
+        - "ArduinoHttpClient"
+        - "Time"
+        - "PubSubClient"
+        - "IOTAppStory-ESP"
+    - name: Remueve frecuencia EU868 en librería IBM LMIC
+      replace: >
+        regexp="^#define CFG_eu868 1"
+        replace="// #define CFG_eu868 1"
+        dest={{ ansible_env.HOME }}/Arduino/libraries/IBM_LMIC_framework/src/lmic/config.h
+    - name: Remueve frecuencia EU868 en librería IBM LMIC
+      replace: >
+        regexp="^//#define CFG_us915 1"
+        replace="#define CFG_us915 1"
+        dest={{ ansible_env.HOME }}/Arduino/libraries/IBM_LMIC_framework/src/lmic/config.h
