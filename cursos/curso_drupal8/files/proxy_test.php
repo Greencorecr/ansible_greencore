@@ -1,6 +1,9 @@
 <?php
 header('Content-Type: text/plain');
-echo "Server IP: ".$_SERVER['SERVER_ADDR'];
-echo "\nClient IP: ".$_SERVER['REMOTE_ADDR'];
-echo "\nX-Forwarded-for: ".$_SERVER['HTTP_X_FORWARDED_FOR'];
+$srvaddr = htmlspecialchars($_SERVER['SERVER_ADDR']);
+$srvremote = htmlspecialchars($_SERVER['REMOTE_ADDR']);
+$srvfwdf = htmlspecialchars($_SERVER['HTTP_X_FORWARDED_FOR']);
+echo "Server IP: ".$srvaddr;
+echo "\nClient IP: ".$srvremote;
+echo "\nX-Forwarded-for: ".$srvfwdf;
 ?>
