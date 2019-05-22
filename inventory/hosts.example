@@ -1,3 +1,3 @@
 [fisicos]
-localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python2 mac00=00:16:3e:c0:40:10 mac01=00:16:3e:c0:40:11 mac02=00:16:3e:c0:40:12 mac03=00:16:3e:c0:40:13 mac04=00:16:3e:c0:40:14 mac05=00:16:3e:c0:40:15 mac06=00:16:3e:c0:40:16
+localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python2 mac00=00:16:3e:c0:40:10 mac01=00:16:3e:c0:40:11 mac02=00:16:3e:c0:40:12 mac03=00:16:3e:c0:40:13 mac04=00:16:3e:c0:40:14 mac05=00:16:3e:c0:40:15 mac06=00:16:3e:c0:40:16 examenmac=00:16:3e:c0:40:99
 
