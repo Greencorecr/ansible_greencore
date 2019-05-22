@@ -4,7 +4,7 @@ before_install:
   - sudo apt-get -qq update
 
 install:
-  - sudo apt-get install -qy lxc libvirt-daemon-system python3-pip wireshark-common
+  - sudo apt-get install -qy lxc libvirt-daemon-system python3-pip wireshark-common nodejs
   - sudo pip install ansible
   - sudo groupadd wireshark
 
