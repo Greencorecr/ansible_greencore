@@ -7,6 +7,8 @@ install:
   - sudo apt-get install -qy lxc libvirt-daemon-system python3-pip wireshark-common
   - sudo pip install ansible
   - sudo groupadd wireshark
+  - mkdir ~/.jupyter/
+  - touch ~/.jupyter/jupyter_notebook_config.py 
 
 script:   
   - "ansible-playbook -i inventory/hosts.example --syntax-check cursos/*yml cursos/*/*yml cursos/*/*/*yml"
