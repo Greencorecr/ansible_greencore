@@ -10,6 +10,7 @@ install:
 
 script:   
   - "ansible-playbook -i inventory/hosts.example --syntax-check cursos/*yml cursos/*/*yml cursos/*/*/*yml"
+  - "ansible-playbook -i inventory/hosts.example  cursos/01-upgrade.yml"
   - "ansible-playbook -i inventory/hosts.example -C cursos/*yml cursos/*/*yml cursos/*/*/*yml"
   - "echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections"
   - "echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections"
