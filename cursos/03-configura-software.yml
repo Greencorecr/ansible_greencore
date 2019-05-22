@@ -43,22 +43,6 @@
       groups: wireshark,sudo,docker,dialout
       append: yes
     become: yes
-  - name: Crea archivo de configuración de Distcc
-    copy:
-      dest: /etc/default/distcc
-      src: files/default-distcc
-      owner: root
-      group: root
-      mode: 0644
-    become: yes
-  - name: Crea configuración de hosts para distcc
-    copy:
-      dest: /etc/distcc/hosts
-      src: files/distcc-hosts
-      owner: root
-      group: root
-      mode: 0644
-    become: yes
   - name: Agrega acl para poder modificar /usr/local como greencore
     acl:
       path: /usr/local
