@@ -4,6 +4,7 @@ before_install:
   - sudo apt-get -qq update
 
 install:
+  - sudo apt-get install -qy lxc
   - sudo pip install ansible
 
 script:   
@@ -11,4 +12,3 @@ script:
   - "ansible-playbook -i inventory/hosts.example -C cursos/*yml cursos/*/*yml cursos/*/*/*yml"
   - "echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections"
   - "echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections"
-  - "sudo apt-get remove -y postgresql-9.2 postgresql-9.3 postgresql-9.4 postgresql-9.5 postgresql-9.6 oracle-java7-installer oracle-java8-installer oracle-java9-installer oracle-java9-set-default oracle-java7-unlimited-jce-policy oracle-java8-unlimited-jce-policy oracle-java9-unlimited-jce-policy"
