@@ -4,13 +4,14 @@ before_install:
   - sudo apt-get -qq update
 
 install:
-  - sudo apt-get install -qy lxc libvirt-daemon-system python3-pip wireshark-common nodejs
+  - sudo apt-get install -qy lxc libvirt-daemon-system python3-pip wireshark-common
   - sudo pip install ansible
   - sudo groupadd wireshark
 
 script:   
   - "ansible-playbook -i inventory/hosts.example --syntax-check cursos/*yml cursos/*/*yml cursos/*/*/*yml"
   - "ansible-playbook -i inventory/hosts.example  cursos/01-upgrade.yml"
+  - sudo apt-get -qy install nodejs
   - "ansible-playbook -i inventory/hosts.example -C cursos/*yml cursos/*/*yml cursos/*/*/*yml"
   - "echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections"
   - "echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections"
