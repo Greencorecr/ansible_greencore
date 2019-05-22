@@ -8,8 +8,8 @@ install:
   - sudo pip install ansible
   - sudo groupadd wireshark
   - sudo apt-get purge mysql-server*
-  - mkdir -p ~/.jupyter/ Arduino/libraries/IBM_LMIC_framework/src/lmic/
-  - touch ~/.jupyter/jupyter_notebook_config.py Arduino/libraries/IBM_LMIC_framework/src/lmic/config.h
+  - mkdir -p ~/.jupyter/ ~/Arduino/libraries/IBM_LMIC_framework/src/lmic/
+  - touch ~/.jupyter/jupyter_notebook_config.py ~/Arduino/libraries/IBM_LMIC_framework/src/lmic/config.h
 
 script:   
   - "ansible-playbook -i inventory/hosts.example --syntax-check cursos/*yml cursos/*/*yml cursos/*/*/*yml"
