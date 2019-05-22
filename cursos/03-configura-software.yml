@@ -93,19 +93,12 @@
   #  become: yes  
   - name: Instala PyCharm
     unarchive:
-      src: http://10.42.30.5/vms/software/pycharm-community-2018.2.3.tar.gz
+      src: https://download.jetbrains.com/python/pycharm-community-2019.1.2.tar.gz 
       mode: 0775
       owner: "{{ ansible_user }}"
       dest: "/usr/local/"
       remote_src: yes
     become: yes
-  - name: Pre-instala PyCharm
-    unarchive:
-      src: http://10.42.30.5/vms/software/PyCharmCE2018.2-home.tar.bz2
-      mode: 0775
-      owner: "{{ ansible_user }}"
-      dest: "{{ ansible_env.HOME }}/"
-      remote_src: yes
   - name: Agrega Pycharm al PATH
     copy:
       dest: /etc/profile.d/pycharm-path.sh
