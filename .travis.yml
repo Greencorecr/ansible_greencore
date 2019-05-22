@@ -1,5 +1,4 @@
-group: deprecated-2017Q2
-dist: trusty
+dist: xenial
 
 before_install:
   - sudo apt-get -qq update
