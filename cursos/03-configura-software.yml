@@ -93,3 +93,9 @@
       owner: root
       group: root
     become: yes
+  - name: Instala extensiones de vscode
+    command: /usr/share/code/bin/code --install-extension "{{ item }}"
+    with_items:
+      - vscoss.vscode-ansible
+      - platformio.platformio-ide
+      - zhwu95.riscv
