@@ -99,3 +99,4 @@
       - vscoss.vscode-ansible
       - platformio.platformio-ide
       - zhwu95.riscv
+      - ms-python.python
