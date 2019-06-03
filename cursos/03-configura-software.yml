@@ -17,7 +17,7 @@
     become: yes
   - name: Instala paquetes requeridos por los instructores
     apt:
-      name: ['vim', 'virt-manager', 'virtualbox', 'fritzing', 'bridge-utils', 'qemu-kvm', 'qemu-system', 'libvirt-bin', 'ubuntu-vm-builder', 'pwgen', 'gnome-shell', 'gnome-tweak-tool', 'chromium-browser', 'screen', 'byobu', 'openssh-server', 'dia', 'shutter', 'vlc', 'mpv', 'wakeonlan', 'git', 'python3-pip', 'avahi-discover', 'udpcast', 'pv', 'docker-compose', 'nmap', 'wireshark', 'etherape', 'iftop', 'pbzip2', 'distcc', 'distcc-pump', 'distccmon-gnome', 'ccache', 'bison', 'flex', 'libncurses-dev', 'libelf-dev', 'libssl-dev', 'rtl-sdr', 'gqrx-sdr', 'nodejs', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'openjdk-8-jre']
+      name: ['vim', 'virt-manager', 'virtualbox', 'fritzing', 'bridge-utils', 'qemu-kvm', 'qemu-system', 'libvirt-bin', 'ubuntu-vm-builder', 'pwgen', 'gnome-shell', 'gnome-tweak-tool', 'chromium-browser', 'screen', 'byobu', 'openssh-server', 'dia', 'shutter', 'vlc', 'mpv', 'wakeonlan', 'git', 'python3-pip', 'avahi-discover', 'udpcast', 'pv', 'docker-compose', 'nmap', 'wireshark', 'etherape', 'iftop', 'pbzip2', 'distcc', 'distcc-pump', 'distccmon-gnome', 'ccache', 'bison', 'flex', 'libncurses-dev', 'libelf-dev', 'libssl-dev', 'rtl-sdr', 'gqrx-sdr', 'nodejs', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'openjdk-8-jre', 'code']
       state: present
     become: yes
   - name: Instala paquete de Atom usando ATP
