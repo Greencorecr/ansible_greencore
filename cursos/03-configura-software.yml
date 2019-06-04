@@ -27,7 +27,7 @@
     become: yes
   - name: Instala módulos de python con pip3
     pip:
-      name: ['asciinema', 'mu-editor', 'ansible', 'apio']
+      name: ['asciinema', 'mu-editor', 'ansible', 'apio', 'pylint']
       state: latest
       executable: pip3
     become: yes
