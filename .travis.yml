@@ -4,7 +4,9 @@ before_install:
   - sudo apt-get -qq update
 
 install:
-  - sudo apt-get install -qy lxc libvirt-daemon-system python3-pip wireshark-common
+  - sudo apt-get install -qy lxc libvirt-daemon-system python3-pip wireshark-common apache2
+  - sudo mkdir /var/www/html/vms/
+  - sudo touch /var/www/html/vms/{NagiosCore.qcow2.bz2,CentOS.qcow2.bz2}
   - sudo pip install ansible
   - sudo groupadd wireshark
   - sudo apt-get purge mysql-server*

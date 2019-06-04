@@ -1,6 +1,7 @@
 [all:vars]
 ansible_user=greencore
 ansible_python_interpreter=/usr/bin/python2
+filesrv=10.42.30.5
 
 [fisicos]
 10.42.25.20 nagiosmac=00:16:3e:c0:40:10 srv1mac=00:16:3e:c0:40:11 srv2mac=00:16:3e:c0:40:12 bdmac=00:16:3e:c0:40:13 br0ip=10.42.25.20 hostname=gcs-profe
