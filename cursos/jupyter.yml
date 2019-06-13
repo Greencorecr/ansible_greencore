@@ -35,8 +35,8 @@
       become: yes
       register: kernel
     - name: Configura jupyter notebook
-      command: "jupyter notebook --generate-config"
-      become: yes
+      command: "jupyter-notebook --generate-config"
+      become: no
       ignore_errors: true
     - name: Agrega clave "greencore" para autenticacion
       lineinfile:
