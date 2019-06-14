@@ -40,7 +40,7 @@
       become: yes
     - name: Agrega repo para Tor
       apt_repository:
-        repo: 'deb http://deb.torproject.org/torproject.org/ bionic main'
+        repo: 'deb http://deb.torproject.org/torproject.org/ xenial main'
       become: yes
     - name: Agregamos llave de GPG para Jenkins
       apt_key:
