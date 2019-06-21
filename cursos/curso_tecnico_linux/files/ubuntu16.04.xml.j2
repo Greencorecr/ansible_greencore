@@ -1,19 +1,25 @@
 <domain type='kvm'>
-  <name>UbuntuServer</name>
-  <uuid>9509e3cc-b413-4656-9fc7-af3fdcb14498</uuid>
+  <name>ubuntu16.04</name>
+  <uuid>0dfc2adf-ef7e-4581-9971-cfc46dc92452</uuid>
+  <metadata>
+    <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+      <libosinfo:os id="http://ubuntu.com/ubuntu/16.04"/>
+    </libosinfo:libosinfo>
+  </metadata>
   <memory unit='KiB'>4194304</memory>
   <currentMemory unit='KiB'>4194304</currentMemory>
-  <vcpu placement='static'>2</vcpu>
+  <vcpu placement='static'>4</vcpu>
   <os>
-    <type arch='x86_64'>hvm</type>
+    <type arch='x86_64' machine='pc-i440fx-xenial'>hvm</type>
     <boot dev='hd'/>
   </os>
   <features>
     <acpi/>
     <apic/>
+    <vmport state='off'/>
   </features>
   <cpu mode='custom' match='exact'>
-    <model fallback='allow'>Haswell-noTSX</model>
+    <model fallback='allow'>Broadwell-IBRS</model>
   </cpu>
   <clock offset='utc'>
     <timer name='rtc' tickpolicy='catchup'/>
@@ -22,7 +28,7 @@
   </clock>
   <on_poweroff>destroy</on_poweroff>
   <on_reboot>restart</on_reboot>
-  <on_crash>restart</on_crash>
+  <on_crash>destroy</on_crash>
   <pm>
     <suspend-to-mem enabled='no'/>
     <suspend-to-disk enabled='no'/>
@@ -32,14 +38,14 @@
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
       <source file='/var/lib/libvirt/images/ubuntu16.04.qcow2'/>
-      <target dev='hda' bus='ide'/>
-      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+      <target dev='vda' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
     </disk>
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
-      <target dev='hdb' bus='ide'/>
+      <target dev='hda' bus='ide'/>
       <readonly/>
-      <address type='drive' controller='0' bus='0' target='0' unit='1'/>
+      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
     </disk>
     <controller type='usb' index='0' model='ich9-ehci1'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x7'/>
@@ -60,13 +66,10 @@
     <controller type='ide' index='0'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
     </controller>
-    <controller type='virtio-serial' index='0'>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
-    </controller>
     <interface type='bridge'>
-      <mac address='{{ mac06 }}'/>
+      <mac address='{{ mac05 }}'/>
       <source bridge='br0'/>
-      <model type='rtl8139'/>
+      <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <serial type='pty'>
@@ -75,28 +78,20 @@
     <console type='pty'>
       <target type='serial' port='0'/>
     </console>
-    <channel type='spicevmc'>
-      <target type='virtio' name='com.redhat.spice.0'/>
-      <address type='virtio-serial' controller='0' bus='0' port='1'/>
-    </channel>
+    <input type='tablet' bus='usb'/>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
-    <graphics type='spice' autoport='yes'>
-      <listen type='address'/>
-      <image compression='off'/>
-    </graphics>
+    <graphics type='spice' autoport='yes'/>
     <sound model='ich6'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
     </sound>
     <video>
-      <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1' primary='yes'/>
+      <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
     </video>
     <redirdev bus='usb' type='spicevmc'>
-      <address type='usb' bus='0' port='1'/>
     </redirdev>
     <redirdev bus='usb' type='spicevmc'>
-      <address type='usb' bus='0' port='2'/>
     </redirdev>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>

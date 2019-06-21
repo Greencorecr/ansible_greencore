@@ -1,12 +1,14 @@
-<domain type='kvm' id='2'>
+<domain type='kvm'>
   <name>CentOS</name>
-  <uuid>1578af73-ef11-4807-a0fb-7cd8d88f8e4e</uuid>
-  <memory unit='KiB'>2097152</memory>
-  <currentMemory unit='KiB'>2097152</currentMemory>
+  <uuid>d7da35c6-17e9-47d5-9bb2-cd98f39fda2d</uuid>
+  <metadata>
+    <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+      <libosinfo:os id="http://centos.org/centos/7.0"/>
+    </libosinfo:libosinfo>
+  </metadata>
+  <memory unit='KiB'>4194304</memory>
+  <currentMemory unit='KiB'>4194304</currentMemory>
   <vcpu placement='static'>4</vcpu>
-  <resource>
-    <partition>/machine</partition>
-  </resource>
   <os>
     <type arch='x86_64' machine='pc-i440fx-xenial'>hvm</type>
     <boot dev='hd'/>
@@ -14,9 +16,10 @@
   <features>
     <acpi/>
     <apic/>
+    <vmport state='off'/>
   </features>
   <cpu mode='custom' match='exact'>
-    <model fallback='allow'>Westmere</model>
+    <model fallback='allow'>Broadwell-IBRS</model>
   </cpu>
   <clock offset='utc'>
     <timer name='rtc' tickpolicy='catchup'/>
@@ -25,7 +28,7 @@
   </clock>
   <on_poweroff>destroy</on_poweroff>
   <on_reboot>restart</on_reboot>
-  <on_crash>restart</on_crash>
+  <on_crash>destroy</on_crash>
   <pm>
     <suspend-to-mem enabled='no'/>
     <suspend-to-disk enabled='no'/>
@@ -35,91 +38,76 @@
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
       <source file='/var/lib/libvirt/images/CentOS.qcow2'/>
-      <backingStore/>
       <target dev='vda' bus='virtio'/>
-      <alias name='virtio-disk0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
     </disk>
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <target dev='hda' bus='ide'/>
+      <readonly/>
+      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+    </disk>
     <controller type='usb' index='0' model='ich9-ehci1'>
-      <alias name='usb'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x7'/>
     </controller>
     <controller type='usb' index='0' model='ich9-uhci1'>
-      <alias name='usb'/>
       <master startport='0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0' multifunction='on'/>
     </controller>
     <controller type='usb' index='0' model='ich9-uhci2'>
-      <alias name='usb'/>
       <master startport='2'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x1'/>
     </controller>
     <controller type='usb' index='0' model='ich9-uhci3'>
-      <alias name='usb'/>
       <master startport='4'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x2'/>
     </controller>
-    <controller type='pci' index='0' model='pci-root'>
-      <alias name='pci.0'/>
+    <controller type='pci' index='0' model='pci-root'/>
+    <controller type='ide' index='0'>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
     </controller>
     <controller type='virtio-serial' index='0'>
-      <alias name='virtio-serial0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
     </controller>
     <interface type='bridge'>
       <mac address='{{ mac06 }}'/>
       <source bridge='br0'/>
-      <target dev='vnet0'/>
       <model type='virtio'/>
-      <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <serial type='pty'>
-      <source path='/dev/pts/0'/>
       <target port='0'/>
-      <alias name='serial0'/>
     </serial>
-    <console type='pty' tty='/dev/pts/0'>
-      <source path='/dev/pts/0'/>
+    <console type='pty'>
       <target type='serial' port='0'/>
-      <alias name='serial0'/>
     </console>
     <channel type='unix'>
-      <source mode='bind' path='/var/lib/libvirt/qemu/channel/target/domain-CentOS/org.qemu.guest_agent.0'/>
-      <target type='virtio' name='org.qemu.guest_agent.0' state='connected'/>
-      <alias name='channel0'/>
+      <source mode='bind'/>
+      <target type='virtio' name='org.qemu.guest_agent.0'/>
       <address type='virtio-serial' controller='0' bus='0' port='1'/>
     </channel>
     <channel type='spicevmc'>
-      <target type='virtio' name='com.redhat.spice.0' state='disconnected'/>
-      <alias name='channel1'/>
+      <target type='virtio' name='com.redhat.spice.0'/>
       <address type='virtio-serial' controller='0' bus='0' port='2'/>
     </channel>
-    <input type='tablet' bus='usb'>
-      <alias name='input0'/>
-    </input>
+    <input type='tablet' bus='usb'/>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
-    <graphics type='spice' port='5900' autoport='yes' listen='127.0.0.1'>
-      <listen type='address' address='127.0.0.1'/>
-    </graphics>
+    <graphics type='spice' autoport='yes'/>
     <sound model='ich6'>
-      <alias name='sound0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
     </sound>
     <video>
       <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1'/>
-      <alias name='video0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
     </video>
+    <redirdev bus='usb' type='spicevmc'>
+    </redirdev>
+    <redirdev bus='usb' type='spicevmc'>
+    </redirdev>
     <memballoon model='virtio'>
-      <alias name='balloon0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
     </memballoon>
   </devices>
-  <seclabel type='dynamic' model='apparmor' relabel='yes'>
-    <label>libvirt-1578af73-ef11-4807-a0fb-7cd8d88f8e4e</label>
-    <imagelabel>libvirt-1578af73-ef11-4807-a0fb-7cd8d88f8e4e</imagelabel>
-  </seclabel>
 </domain>
 
