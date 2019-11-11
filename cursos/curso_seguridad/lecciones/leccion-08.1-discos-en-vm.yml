@@ -4,7 +4,7 @@
   tasks:
     - name: Descarga vdb
       get_url:
-        url: http://{{ filesrv }}/vms/forense/kali-1.qcow2.bz2
+        url: http://10.42.30.5/vms/forense/kali-1.qcow2.bz2
         dest: /var/lib/libvirt/images/kali-1.qcow2.bz2
         mode: 0775
         owner: "{{ ansible_user }}"
@@ -15,7 +15,7 @@
       become: yes
     - name: Descarga vdc
       get_url:
-        url: http://{{ filesrv }}/vms/forense/kali-2.qcow2.bz2
+        url: http://10.42.30.5/vms/forense/kali-2.qcow2.bz2
         dest: /var/lib/libvirt/images/kali-2.qcow2.bz2
         mode: 0775
         owner: "{{ ansible_user }}"
@@ -26,7 +26,7 @@
       become: yes
     - name: Descarga vdd
       get_url:
-        url: http://{{ filesrv }}/vms/forense/kali-3.qcow2.bz2
+        url: http://10.42.30.5/vms/forense/kali-3.qcow2.bz2
         dest: /var/lib/libvirt/images/kali-3.qcow2.bz2
         mode: 0775
         owner: "{{ ansible_user }}"

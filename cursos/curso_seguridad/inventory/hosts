@@ -57,6 +57,7 @@ mac01
 10.42.25.48
 10.42.25.49
 
+
 [openvas:children]
 mac02
 

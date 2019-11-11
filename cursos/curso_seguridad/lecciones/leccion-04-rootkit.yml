@@ -15,7 +15,7 @@
       become: yes
     - name: Mueve imagen de kali a directorio de imagenes
       get_url:
-        url: http://{{ filesrv }}/vms/rootkit.qcow2.bz2
+        url: http://10.42.30.5/vms/rootkit.qcow2.bz2
         mode: 0775
         owner: "{{ ansible_user }}"
         dest: /var/lib/libvirt/images/rootkit.qcow2.bz2

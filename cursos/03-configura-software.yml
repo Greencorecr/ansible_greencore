@@ -88,7 +88,7 @@
       dest: /etc/profile.d/pycharm-path.sh
       content: |
               #!/usr/bin/env bash
-              export PATH=$PATH:/usr/local/pycharm-community-2018.2.3/bin/
+              export PATH=$PATH:/usr/local/pycharm-community-2019.1.2/bin
       mode: 0755
       owner: root
       group: root

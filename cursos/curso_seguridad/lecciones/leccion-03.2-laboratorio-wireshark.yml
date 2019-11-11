@@ -4,13 +4,7 @@
   tasks:
     - name: Instala paquetes requeridos
       apt:
-        name: "{{ item }}"
-        state: latest
-      with_items:
-        - apache2
-        - vim
-        - nano
-        - less
+       name: ['apache2', 'vim', 'nano', 'less']
       become: yes
     - name: Copia config de apache de htpasswd
       copy:

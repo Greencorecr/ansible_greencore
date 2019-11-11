@@ -1,6 +1,6 @@
 ---
 - name: Configura servicios a monitorear
-  hosts: inseguro
+  hosts: inseguro2
   tasks:
     - name: Crea usuarios para laboratorios, con claves sacas de crunch
       user:
