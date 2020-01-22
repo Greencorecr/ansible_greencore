@@ -102,7 +102,7 @@
       - ms-python.python
   - name: Descarga sagemath
     unarchive:
-      src: http://10.42.30.5/vms/software/sage-8.8-Ubuntu_16.04-x86_64.tar.bz2
+      src: http://{{ filesrv }}/vms/software/sage-8.8-Ubuntu_16.04-x86_64.tar.bz2
       dest: /usr/local/
       owner: root
       group: root
