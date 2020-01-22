@@ -1,10 +1,9 @@
 [all:vars]
 ansible_user=greencore
-ansible_python_interpreter=/usr/bin/python2
 filesrv=10.42.30.5
 
 [fisicos]
-10.42.25.20 nagiosmac=00:16:3e:c0:40:10 srv1mac=00:16:3e:c0:40:11 srv2mac=00:16:3e:c0:40:12 bdmac=00:16:3e:c0:40:13 br0ip=10.42.25.20 hostname=gcs-profe
+10.42.25.20 mac00=00:16:3e:c0:40:10 mac01=00:16:3e:c0:40:11 mac02=00:16:3e:c0:40:12 mac03=00:16:3e:c0:40:13 mac04=00:16:3e:c0:40:14 mac05=00:16:3e:c0:40:15 mac06=00:16:3e:c0:40:16 br0ip=10.42.25.20 hostname=gcs-profe
 10.42.25.21 nagiosmac=00:16:3e:c0:41:10 srv1mac=00:16:3e:c0:41:11 srv2mac=00:16:3e:c0:41:12 bdmac=00:16:3e:c0:41:13 br0ip=10.42.25.21 hostname=gcs-aula03-01
 10.42.25.22 nagiosmac=00:16:3e:c0:42:10 srv1mac=00:16:3e:c0:42:11 srv2mac=00:16:3e:c0:42:12 bdmac=00:16:3e:c0:42:13 br0ip=10.42.25.22 hostname=gcs-aula03-02
 10.42.25.23 nagiosmac=00:16:3e:c0:43:10 srv1mac=00:16:3e:c0:43:11 srv2mac=00:16:3e:c0:43:12 bdmac=00:16:3e:c0:43:13 br0ip=10.42.25.23 hostname=gcs-aula03-03
@@ -17,43 +16,18 @@ filesrv=10.42.30.5
 
 [virtuales:children]
 nagiosxi
-srv1
+srv
 srv2
 
 [nagiosxi]
-10.42.25.77 ansible_python_interpreter=/usr/bin/python2.7
-10.42.25.137
-
-10.42.25.93
-10.42.25.87
-
-10.42.25.114
-10.42.25.67
-
-10.42.25.75
-10.42.25.146
-
-10.42.25.83
-10.42.25.130
-
-10.42.25.116
-10.42.25.52
-
-10.42.25.102
-10.42.25.71
-
-10.42.25.55
-10.42.25.92
-
-10.42.25.69
-10.42.25.79
-
-10.42.25.86
-10.42.25.54
+10.42.25.30
 
 
-[srv1]
-10.42.25.81
+[srv]
+10.42.25.40
 
 [srv2]
 10.42.25.72
+
+[update]
+10.42.25.70

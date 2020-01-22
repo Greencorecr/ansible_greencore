@@ -23,7 +23,7 @@
           - lxc.start.auto = 1
           - lxc.start.delay = 120
           - lxc.start.order = 0
-          - lxc.network.hwaddr = {{ examenmac }}
+          - lxc.network.hwaddr = {{ mac06 }}
         template: download
         state: started
         template_options: -d centos -r 7 -a amd64
@@ -32,5 +32,5 @@
       command: lxc-attach -n {{ item[0] }} -- {{ item[1] }}
       with_nested:
         - [ 'examen']
-        - [ 'yum update -y', 'yum install openssh-server sudo which psmisc -y', 'systemctl enable sshd', 'systemctl start sshd', 'useradd -s /bin/bash -G wheel -m -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore']
+        - [ 'yum update -y', 'yum install openssh-server sudo which psmisc wget -y', 'systemctl enable sshd', 'systemctl start sshd', 'useradd -s /bin/bash -G wheel -m -p "$6$dF3C39/G$6oRDu6OCq9Td2hU1iN4lRyMTIPtTkq3bIivTAEqxUGOH6LRAkmkGcqjlLN4jT6S1buHEUmCJAqIhqnPcMKbxE1" greencore', 'mkdir ~greencore/.ssh/', 'wget -O ~greencore/.ssh/authorized_keys https://raw.githubusercontent.com/greencorecr/ansible_greencore/master/files/authorized_keys', 'chown -R greencore:greencore ~greencore/.ssh', 'wget -O /etc/sudoers.d/jupyter https://raw.githubusercontent.com/fede2cr/jupyter_playground/master/bash/jupyter-sudoers', 'chmod 0400 /etc/sudoers.d/jupyter', 'chown root:root /etc/sudoers.d/jupyter' ]
       become: yes

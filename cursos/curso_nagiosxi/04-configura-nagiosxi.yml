@@ -5,7 +5,7 @@
     - name: Copia instalador de nagiosxi
       unarchive:
         dest: /home/greencore/ 
-        src: https://assets.nagios.com/downloads/nagiosxi/5/xi-5.4.12.tar.gz
+        src: https://assets.nagios.com/downloads/nagiosxi/5/xi-5.6.10.tar.gz
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         remote_src: yes

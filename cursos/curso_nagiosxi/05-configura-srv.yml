@@ -4,20 +4,19 @@
   tasks:
     - name: Instala paquetes requeridos
       yum:
-        name: "{{ item }}"
+        name:
+          - httpd
+          - vsftpd
+          - dnsmasq
+          - net-snmp
+          - net-snmp-utils
+          - less
+          - vim
+          - postgresql-server
+          - mariadb-server
+          - freeradius
+          - postfix
         state: latest
-      with_items:
-        - httpd
-        - vsftpd
-        - dnsmasq
-        - net-snmp
-        - net-snmp-utils
-        - less
-        - vim
-        - postgresql-server
-        - mariadb-server
-        - freeradius
-        - postfix
       become: yes
     - name: Crea configuración de snmpd
       copy:
