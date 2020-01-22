@@ -11,19 +11,18 @@
     become: yes
   - name: Instala paquetes requeridos para esta receta
     apt: 
-      name: "{{ item }}"
-      state: installed
-    with_items:
-      - realmd
-      - ntp
-      - sssd
-      - adcli
-      - krb5-user 
-      - sssd-tools
-      - samba-common
-      - packagekit
-      - samba-common-bin
-      - samba-libs
+      name:
+        - realmd
+        - ntp
+        - sssd
+        - adcli
+        - krb5-user 
+        - sssd-tools
+        - samba-common
+        - packagekit
+        - samba-common-bin
+        - samba-libs
+      state: present
     become: yes
   - name: Configura servicio de hora
     service:
