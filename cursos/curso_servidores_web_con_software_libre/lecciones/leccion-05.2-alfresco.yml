@@ -29,5 +29,5 @@
     - name: Copia alfresco
       get_url:
         dest: "{{ ansible_env.HOME }}"
-        url: http://10.42.30.5/alfresco-community-installer-201707-linux-x64.bin
+        url: http://{{ filesrv }}/alfresco-community-installer-201707-linux-x64.bin
         mode: 0755
