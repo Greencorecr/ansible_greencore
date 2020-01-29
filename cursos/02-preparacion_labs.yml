@@ -41,7 +41,7 @@
   - name: Configura kernel para que funcione como router
     sysctl:
       name: net.ipv4.ip_forward
-      value: 1
+      value: '1'
       sysctl_set: yes
       state: present
       reload: yes
@@ -68,7 +68,13 @@
     copy:
       dest: "{{ ansible_env.HOME }}/.ssh/config"
       content: |
+              Host 10.42.21.*
+                StrictHostKeyChecking no
+                UserKnownHostsFile=/dev/null
               Host 10.42.24.*
+                StrictHostKeyChecking no
+                UserKnownHostsFile=/dev/null
+              Host 10.42.25.*
                 StrictHostKeyChecking no
                 UserKnownHostsFile=/dev/null
       owner: "{{ ansible_user }}"
@@ -85,39 +91,39 @@
   - name: Apaga todos los contenedores
     command: "lxc-stop -n {{ item }}"
     with_items:
-      - inseguro
+      - foo
     become: yes
     ignore_errors: true
   - name: Destruye todos los contenedores
     command: "lxc-destroy -n {{ item }}"
     with_items:
-      - inseguro
+      - foo
     become: yes
     ignore_errors: true
-  - name: Crea contenedor inseguro
+  - name: Crea contenedor vacio foo
     lxc_container:
-      name: inseguro
+      name: foo
       container_log: true
       container_config:
-        - lxc.network.link = br0
-        - lxc.start.auto = 1
-        - lxc.start.delay = 120
-        - lxc.start.order = 0
-        - lxc.network.hwaddr = {{ mac01 }}
+        - 'lxc.network.link = br0'
+        - 'lxc.start.auto = 1'
+        - 'lxc.start.delay = 120'
+        - 'lxc.start.order = 0'
+        - 'lxc.network.hwaddr = {{ mac01 }}'
       template: download
       state: started
-      template_options: -d ubuntu -r xenial -a amd64
+      template_options: -d ubuntu -r bionic -a amd64
     become: yes
   - name: Apaga todos los contenedores
     command: "lxc-stop -n {{ item }}"
     with_items:
-      - inseguro
+      - foo
     become: yes
     ignore_errors: true
   - name: Destruye todos los contenedores
     command: "lxc-destroy -n {{ item }}"
     with_items:
-      - inseguro
+      - foo
     become: yes
     ignore_errors: true
   - name: Deshabilita tracker
